@@ -1,0 +1,4 @@
+rootProject.name = 'craw-root'
+include 'craw-cli'
+include 'craw-lib'
+
