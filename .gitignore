@@ -14,9 +14,6 @@
 *.tar.gz
 *.rar
 
-# CMake
-cmake-build-*/
-
 # IntelliJ
 out/
 .idea/
