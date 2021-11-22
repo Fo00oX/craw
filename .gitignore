@@ -14,8 +14,8 @@
 *.tar.gz
 *.rar
 
-# CMake
-cmake-build-*/
+# Gradle
+**/build/**
 
 # IntelliJ
 out/
