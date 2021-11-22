@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.craw.cli;
 
-import at.ac.fhcampuswien.SampleLib;
+import at.ac.fhcampuswien.craw.lib.SampleLib;
 
 /**
  * This class is the entry point for the cli interface.
