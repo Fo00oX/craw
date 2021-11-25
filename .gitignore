@@ -15,7 +15,9 @@
 *.rar
 
 # Gradle
-**/build/**
+**/build/
+**/buildOutputCleanup/
+**/.gradle/
 
 # IntelliJ
 out/
