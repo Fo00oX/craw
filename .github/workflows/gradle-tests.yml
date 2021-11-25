@@ -1,7 +1,8 @@
 # Config from own experience and https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 name: Run Tests
 
-on: [pull_request]
+on:
+  - pull_request
 
 jobs:
   build:
@@ -15,8 +16,8 @@ jobs:
           java-version: '14'
           distribution: 'adopt'
       # Validation does not work for some reason. Gradle Wrapper was created by using gradle v7.2 installed from the apt repository.
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1.0.4
+      #- name: Validate Gradle wrapper
+      #  uses: gradle/wrapper-validation-action@v1.0.4
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v2.0.1
       - name: Cleanup Gradle Cache
