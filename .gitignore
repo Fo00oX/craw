@@ -14,6 +14,12 @@
 *.tar.gz
 *.rar
 
+# Gradle
+**/build/
+**/buildOutputCleanup/
+**/.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
 # IntelliJ
 out/
 .idea/
