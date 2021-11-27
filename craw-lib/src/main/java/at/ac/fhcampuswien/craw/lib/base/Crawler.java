@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.craw.lib;
+package at.ac.fhcampuswien.craw.lib.base;
 
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
