@@ -13,6 +13,7 @@ public class Exporter {
      */
     public void writeYAML(String filename, List<Weblink> links) {
         if (!filename.endsWith(".yml") && !filename.endsWith(".yaml")) filename += ".yml";
+        //TODO add functionality
     }
 
     /**
@@ -23,5 +24,6 @@ public class Exporter {
      */
     public void writeJSON(String filename, List<Weblink> links) {
         if (!filename.endsWith(".json")) filename += ".json";
+        //TODO add functionality
     }
 }
