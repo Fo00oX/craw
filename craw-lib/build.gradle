@@ -6,5 +6,5 @@ group 'at.ac.fhcampuswien'
 version '1.0-SNAPSHOT'
 
 dependencies {
-
+    implementation 'org.jsoup:jsoup:1.14.3'
 }
