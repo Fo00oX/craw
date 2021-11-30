@@ -11,6 +11,10 @@ public abstract class BaseCrawException extends Exception {
         this.errorMessage = uiErrorMessage;
     }
 
+    protected BaseCrawException(String message) {
+        this(message, message);
+    }
+
     /**
      * @return the UI-safe error message of this Exception
      */
