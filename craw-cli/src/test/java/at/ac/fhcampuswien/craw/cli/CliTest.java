@@ -22,7 +22,6 @@ public class CliTest {
         CliException e = CliException.ForNoArgumentsProvided();
 
         // act
-        boolean x = App.isDebug();
         App.main(new String[]{});
 
         // assert
