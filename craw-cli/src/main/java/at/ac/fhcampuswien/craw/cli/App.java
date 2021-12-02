@@ -16,15 +16,22 @@ import java.util.Properties;
 public class App {
     public static CliOutput sysOut = new SystemOutput();
     private static boolean debug;
+    private static int errorExitCode = -1;
 
     public static void main(String[] args) throws Exception {
+        // Load system properties
         try (InputStream appPropertyFile = new FileInputStream(Objects.requireNonNull(App.class.getResource("/properties/app.properties")).getFile())) {
-            Properties prop = new Properties();
+            Properties prop = new Properties(System.getProperties());
             prop.load(appPropertyFile);
-            debug = ((String) prop.get("DEBUG")).equalsIgnoreCase("TRUE");
+            System.setProperties(prop);
+
+            debug = Boolean.getBoolean("DEBUG");
+            Integer overrideExitCode = Integer.getInteger("OVERRIDE_EXIT_CODE");
+            if (overrideExitCode != null) errorExitCode = overrideExitCode;
         } catch (IOException ex) {
-            ex.printStackTrace();
+            debug = false;
         }
+
         try {
             CliController cli = new CliController(App.sysOut);
             cli.addCommand(args);
@@ -41,7 +48,7 @@ public class App {
     }
 
     /**
-     * Exits the application with the error code -1 and prints a generic error message if debug mode is disabled.
+     * Exits the application with the error code -1 (can be overridden by the system property "OVERRIDE_EXIT_CODE") and prints a generic error message if debug mode is disabled.
      * If debug mode is enabled, the stacktrace of the exception will be printed to console and the exception thrown again.
      * <p>
      * WARNING! BaseCrawExceptions should be caught separately to call the overload exitWithError(BaseCrawException e), which prints a more specific error message.
@@ -52,13 +59,13 @@ public class App {
     public static void exitWithError(Exception e) throws Exception {
         if (!debug) {
             sysOut.printlnError("An unexpected error has occured.");
-            System.exit(-1);
+            System.exit(errorExitCode);
         } else
             throw e;
     }
 
     /**
-     * Exits the application with the error code -1 and prints the error message of the {@link BaseCrawException} if debug mode is disabled.
+     * Exits the application with the error code -1 (can be overridden by the system property "OVERRIDE_EXIT_CODE") and prints the error message of the {@link BaseCrawException} if debug mode is disabled.
      * If debug mode is enabled, the exception will be thrown again.
      *
      * @param e the caught Exception
@@ -67,7 +74,7 @@ public class App {
     public static void exitWithError(BaseCrawException e) throws BaseCrawException {
         if (!debug) {
             sysOut.printlnError(e.getErrorMessage());
-            System.exit(-1);
+            System.exit(errorExitCode);
         } else
             throw e;
     }
