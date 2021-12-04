@@ -34,8 +34,7 @@ public class App {
 
         try {
             CliController cli = new CliController(App.sysOut);
-            cli.addCommand(args);
-            cli.start();
+            cli.start(args);
         } catch (BaseCrawException e) { // any BaseCrawException that gets to this point already blocked the application execution
             exitWithError(e);
         } catch (Exception e) {

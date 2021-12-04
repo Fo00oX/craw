@@ -27,4 +27,10 @@ public class CliTest {
         // assert
         assertEquals(e.getErrorMessage(), sysOut.popErrOut());
     }
+
+    @Test
+    void printErrorTextWhenIncorrectCommand() {
+        // arrange
+
+    }
 }
