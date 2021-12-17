@@ -1,9 +1,9 @@
 package at.ac.fhcampuswien.craw.cli.cliTools;
 
 /**
- * Implements {@link CliOutput} to write to console
+ * Implements {@link SystemWrapperInterface} to write to console
  */
-public class SystemOutput implements CliOutput {
+public class SystemWrapper implements SystemWrapperInterface {
     @Override
     public void print(String output) {
         System.out.print(output);

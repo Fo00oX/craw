@@ -1,12 +1,12 @@
 package at.ac.fhcampuswien.craw.cli.model;
 
-import at.ac.fhcampuswien.craw.cli.cliTools.CliOutput;
+import at.ac.fhcampuswien.craw.cli.cliTools.SystemWrapperInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TestOutput implements CliOutput {
+public class TestOutput implements SystemWrapperInterface {
     private final List<Message> stdOut = new ArrayList<>();
     private final List<Message> errOut = new ArrayList<>();
 
