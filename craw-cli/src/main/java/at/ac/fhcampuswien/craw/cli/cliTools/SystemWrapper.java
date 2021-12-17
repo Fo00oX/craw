@@ -36,11 +36,11 @@ public class SystemWrapper {
      * @param e the caught Exception
      */
     public void exitWithError(Exception e) {
-        if (!App.isDebug()) {
-            printlnError("An unexpected error has occured.");
+        if (App.isDebug()) {
+            e.printStackTrace();
             System.exit(errorExitCode);
         } else {
-            e.printStackTrace();
+            printlnError("An unexpected error has occured.");
             System.exit(errorExitCode);
         }
     }
@@ -52,11 +52,11 @@ public class SystemWrapper {
      * @param e the caught Exception
      */
     public void exitWithError(BaseCrawException e) {
-        if (!App.isDebug()) {
-            printlnError(e.getErrorMessage());
+        if (App.isDebug()) {
+            e.printStackTrace();
             System.exit(errorExitCode);
         } else {
-            e.printStackTrace();
+            printlnError(e.getErrorMessage());
             System.exit(errorExitCode);
         }
     }
