@@ -4,6 +4,10 @@ import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import java.util.List;
 
+/**
+ * @author Thonhauser
+ */
+
 public class Exporter {
     /**
      * Writes a list of Weblinks to a .yaml/yml file
