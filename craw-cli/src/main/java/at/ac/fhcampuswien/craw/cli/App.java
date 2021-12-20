@@ -1,45 +1,47 @@
 package at.ac.fhcampuswien.craw.cli;
 
-import at.ac.fhcampuswien.craw.cli.cliTools.SystemWrapper;
-import at.ac.fhcampuswien.craw.lib.exceptions.BaseCrawException;
+import at.ac.fhcampuswien.craw.cli.commands.PageCommand;
+import at.ac.fhcampuswien.craw.cli.commands.SearchCommand;
+import picocli.AutoComplete;
+import picocli.CommandLine;
+import picocli.CommandLine.Option;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import static picocli.CommandLine.Command;
 
 /**
  * This class is the entry point for the cli application.
  */
-public class App {
-    private static boolean debug;
-
-    public static void main(String[] args) {
-        SystemWrapper system = new SystemWrapper();
-
-        // Load system properties
-        try (InputStream appPropertyFile = new FileInputStream(Objects.requireNonNull(App.class.getResource("/properties/app.properties")).getFile())) {
-            Properties prop = new Properties(System.getProperties());
-            prop.load(appPropertyFile);
-            System.setProperties(prop);
-
-            debug = Boolean.getBoolean("DEBUG");
-        } catch (IOException ex) {
-            debug = false;
+@Command(
+        version = {
+                "Craw version " + App.VERSION,
+                "Java version: ${java.version}",
+                "OS: ${os.name} ${os.version}"},
+        name = "craw",
+        description = "Craw command description",
+        subcommands = {
+                PageCommand.class,
+                SearchCommand.class,
+                AutoComplete.GenerateCompletion.class
         }
+)
+public class App implements Runnable {
 
-        try {
-            CliController cli = new CliController(system);
-            cli.start(args);
-        } catch (BaseCrawException e) { // any BaseCrawException that gets to this point already blocked the application execution
-            system.exitWithError(e);
-        } catch (Exception e) {
-            system.exitWithError(e);
-        }
+    public static final String VERSION = "v0.0.1";
+
+    @Option(names = "--help", usageHelp = true, description = "Display this help and exit")
+    boolean help;
+    @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit")
+    boolean versionRequested;
+
+    public static void main(String... args) {
+        App app = new App();
+        // If initialization is required, follow this guide: https://picocli.info/#_initialization_before_execution
+        new CommandLine(app)
+                .execute(args);
     }
 
-    public static boolean isDebug() {
-        return debug;
+    @Override
+    public void run() {
+
     }
 }
