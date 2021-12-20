@@ -9,7 +9,8 @@ import picocli.CommandLine.Option;
 import static picocli.CommandLine.Command;
 
 /**
- * This class is the entry point for the cli application.
+ * Represents the base command "craw", from which all subcommands and options branch off.
+ * The Options to print help text and version information is located here.
  */
 @Command(
         version = {
@@ -26,11 +27,11 @@ import static picocli.CommandLine.Command;
 )
 public class App implements Runnable {
 
-    public static final String VERSION = "v0.0.1";
+    public static final String VERSION = "v0.0.1-Alpha";
 
     @Option(names = "--help", usageHelp = true, description = "Display this help and exit")
     boolean help;
-    @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit")
+    @Option(names = {"--version", "-V"}, versionHelp = true, description = "Print version information and exit")
     boolean versionRequested;
 
     public static void main(String... args) {
