@@ -17,6 +17,3 @@ docker build -t craw-cli .
 #start the container
 docker run -d --name craw-cli craw-cli
 
-#inspect the logs
-docker logs -f craw-cli
-
