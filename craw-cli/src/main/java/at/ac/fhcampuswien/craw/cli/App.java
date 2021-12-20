@@ -4,7 +4,9 @@ import at.ac.fhcampuswien.craw.cli.commands.PageCommand;
 import at.ac.fhcampuswien.craw.cli.commands.SearchCommand;
 import picocli.AutoComplete;
 import picocli.CommandLine;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 
 import static picocli.CommandLine.Command;
 
@@ -26,6 +28,8 @@ import static picocli.CommandLine.Command;
         }
 )
 public class App implements Runnable {
+    @Spec
+    private CommandSpec spec;
 
     public static final String VERSION = "v0.0.1-Alpha";
 
@@ -43,6 +47,5 @@ public class App implements Runnable {
 
     @Override
     public void run() {
-
-    }
+    } // picocli raises an error automatically if no command can be matched.
 }

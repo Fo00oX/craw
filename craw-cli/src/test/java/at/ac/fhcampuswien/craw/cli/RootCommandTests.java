@@ -1,6 +1,9 @@
 package at.ac.fhcampuswien.craw.cli;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,5 +40,18 @@ public class RootCommandTests extends CliTestBase {
         assertTrue(output.contains("page"));
         assertTrue(output.contains("search"));
         assertTrue(output.contains("generate-completion"));
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    @ValueSource(strings = {"notACommand", "-1"})
+    void failIfNoOrIncorrectCommandSpecified(String args) {
+        // act
+        int exitCode = cmd.execute(args);
+        String output = err.toString();
+
+        // assert
+        expectFailedExitCode(exitCode);
+        assertTrue(output.contains(args)); // ensure that the error message actually contains the invalid arguments
     }
 }
