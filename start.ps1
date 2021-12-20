@@ -1,5 +1,3 @@
-#!/usr/local/bin/pwsh
-
 #check if container exists
 if (docker ps -a | Select-String -Pattern "craw-cli") {
   docker stop craw-cli
