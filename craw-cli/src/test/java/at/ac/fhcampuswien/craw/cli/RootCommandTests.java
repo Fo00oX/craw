@@ -25,7 +25,12 @@ public class RootCommandTests extends CliTestBase {
         assertTrue(output.contains("version"));
     }
 
-    @Test
+    /**
+     * Tests the help text option with different options
+     * The combinations with V check that the help option correctly activates even if the option is combined with other options
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"--help", "-h", "-?", "-V?", "-Vh", "-?V", "-hV"})
     void testHelp() {
         // act
         int exitCode = cmd.execute("--help");

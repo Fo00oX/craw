@@ -33,7 +33,7 @@ public class App implements Runnable {
 
     public static final String VERSION = "v0.0.1-Alpha";
 
-    @Option(names = "--help", usageHelp = true, description = "Display this help and exit")
+    @Option(names = {"--help","-h","-?"}, usageHelp = true, description = "Display this help and exit")
     boolean help;
     @Option(names = {"--version", "-V"}, versionHelp = true, description = "Print version information and exit")
     boolean versionRequested;
