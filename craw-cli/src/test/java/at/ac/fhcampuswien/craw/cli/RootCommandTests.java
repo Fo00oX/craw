@@ -31,9 +31,9 @@ public class RootCommandTests extends CliTestBase {
      */
     @ParameterizedTest
     @ValueSource(strings = {"--help", "-h", "-?", "-V?", "-Vh", "-?V", "-hV"})
-    void testHelp() {
+    void testHelp(String arg) {
         // act
-        int exitCode = cmd.execute("--help");
+        int exitCode = cmd.execute(arg);
         String output = out.toString();
 
         // assert

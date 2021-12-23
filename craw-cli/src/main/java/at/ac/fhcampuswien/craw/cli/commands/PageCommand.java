@@ -11,13 +11,12 @@ import static picocli.CommandLine.Command;
         name = "page",
         description = "Fetch a list of all Links present on a Webpage"
 )
-public class PageCommand implements Callable<Integer> {
+public class PageCommand extends BaseCommand {
     @Spec
     CommandSpec spec;
 
     @Override
-    public Integer call() {
+    public void run() {
         spec.commandLine().getOut().println("PageCommand");
-        return 0;
     }
 }

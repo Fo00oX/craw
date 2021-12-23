@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.craw.cli;
 
+import at.ac.fhcampuswien.craw.cli.commands.BaseCommand;
 import at.ac.fhcampuswien.craw.cli.commands.PageCommand;
 import at.ac.fhcampuswien.craw.cli.commands.SearchCommand;
 import picocli.AutoComplete;
@@ -27,14 +28,12 @@ import static picocli.CommandLine.Command;
                 AutoComplete.GenerateCompletion.class
         }
 )
-public class App implements Runnable {
+public class App extends BaseCommand {
     @Spec
     private CommandSpec spec;
 
     public static final String VERSION = "v0.0.1-Alpha";
 
-    @Option(names = {"--help","-h","-?"}, usageHelp = true, description = "Display this help and exit")
-    boolean help;
     @Option(names = {"--version", "-V"}, versionHelp = true, description = "Print version information and exit")
     boolean versionRequested;
 
@@ -46,6 +45,5 @@ public class App implements Runnable {
     }
 
     @Override
-    public void run() {
-    } // picocli raises an error automatically if no command can be matched.
+    public void run() {} // picocli raises an error automatically if no command can be matched.
 }

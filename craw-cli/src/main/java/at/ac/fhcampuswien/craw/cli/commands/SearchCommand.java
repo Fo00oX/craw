@@ -9,13 +9,12 @@ import java.util.concurrent.Callable;
         name = "search",
         description = "Run a Google search using a specified request"
 )
-public class SearchCommand implements Callable<Integer> {
-    @CommandLine.Spec
+public class SearchCommand extends BaseCommand {
+    @Spec
     CommandSpec spec;
 
     @Override
-    public Integer call() {
+    public void run() {
         spec.commandLine().getOut().println("SearchCommand!");
-        return 0;
     }
 }
