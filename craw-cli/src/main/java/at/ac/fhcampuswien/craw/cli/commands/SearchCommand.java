@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.craw.cli.commands;
 
+import at.ac.fhcampuswien.craw.cli.commands.base.BaseLinkOutputCommand;
 import at.ac.fhcampuswien.craw.lib.advanced.GoogleSearch;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
@@ -11,7 +12,7 @@ import static picocli.CommandLine.*;
         name = "search",
         description = "Run a Google search using a specified query."
 )
-public class SearchCommand extends BaseCommand {
+public class SearchCommand extends BaseLinkOutputCommand {
 
     @Parameters(
             paramLabel = "query",
@@ -19,7 +20,7 @@ public class SearchCommand extends BaseCommand {
             arity = "1..*",
             description = ""
     )
-    List<String> queryStrings;
+    private List<String> queryStrings;
 
     @Option(
             names = {"-r", "-n", "--results"},
@@ -27,14 +28,7 @@ public class SearchCommand extends BaseCommand {
             description = "The number of results to fetch. Defaults to ${DEFAULT-VALUE}.",
             defaultValue = "10"
     )
-    int nrResults;
-
-    @Option(
-            names = {"--linksOnly", "-l"},
-            description = "If specified, prints only the discovered links without additional information."
-    )
-    boolean linksOnly = false;
-
+    private int nrResults;
 
     /**
      * @return the full query joined into a single String
@@ -52,6 +46,6 @@ public class SearchCommand extends BaseCommand {
         List<Weblink> result = search.searchQuery(getQuery(), nrResults);
 
         if (!linksOnly) spec.commandLine().getOut().println(String.format("Found %d results:", result.size()));
-        printWeblinks(result, linksOnly);
+        printWeblinks(result);
     }
 }

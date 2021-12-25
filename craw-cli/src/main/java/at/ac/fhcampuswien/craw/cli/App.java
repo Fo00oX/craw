@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.craw.cli;
 
-import at.ac.fhcampuswien.craw.cli.commands.BaseCommand;
+import at.ac.fhcampuswien.craw.cli.commands.base.BaseCommand;
 import at.ac.fhcampuswien.craw.cli.commands.PageCommand;
 import at.ac.fhcampuswien.craw.cli.commands.SearchCommand;
 import picocli.AutoComplete;
