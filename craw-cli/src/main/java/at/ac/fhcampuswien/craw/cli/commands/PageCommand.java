@@ -12,9 +12,6 @@ import static picocli.CommandLine.Command;
         description = "Fetch a list of all Links present on a Webpage"
 )
 public class PageCommand extends BaseCommand {
-    @Spec
-    CommandSpec spec;
-
     @Override
     public void run() {
         spec.commandLine().getOut().println("PageCommand");

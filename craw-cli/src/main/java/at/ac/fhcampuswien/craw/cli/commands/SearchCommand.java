@@ -11,8 +11,6 @@ import static picocli.CommandLine.*;
         description = "Run a Google search using a specified query."
 )
 public class SearchCommand extends BaseCommand {
-    @Spec
-    CommandSpec spec;
 
     @Parameters(
             paramLabel = "query",
