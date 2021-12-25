@@ -16,12 +16,14 @@ import static picocli.CommandLine.Command;
  * The Options to print help text and version information is located here.
  */
 @Command(
+        name = "craw",
+        description = "Craw command description",
         version = {
                 "Craw version " + App.VERSION,
                 "Java version: ${java.version}",
-                "OS: ${os.name} ${os.version}"},
-        name = "craw",
-        description = "Craw command description",
+                "OS: ${os.name} ${os.version}"
+        },
+        synopsisSubcommandLabel = "COMMAND",
         subcommands = {
                 PageCommand.class,
                 SearchCommand.class,
