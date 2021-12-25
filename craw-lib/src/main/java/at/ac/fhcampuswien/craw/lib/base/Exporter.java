@@ -45,7 +45,7 @@ public class Exporter {
             filename += ".json";
         }
         JSONArray linksAsJSON = convertLinksToJsonFormat(links);
-        saveLinksAsJSON(linksAsJSON);
+        saveLinksAsJSON(filename, linksAsJSON);
     }
 
     public JSONArray convertLinksToJsonFormat(List<Weblink> links) {
@@ -61,18 +61,18 @@ public class Exporter {
         return json;
     }
 
-    public File createJSONFile() {
+    public File createJSONFile(String filename) {
         try {
-            return new File("links.json");
+            return new File(filename);
         } catch (InvalidPathException ipe) {
             System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
         }
         return null;
     }
 
-    public void saveLinksAsJSON(JSONArray linksAsJSON) {
+    public void saveLinksAsJSON(String filename, JSONArray linksAsJSON) {
         try {
-            file = createJSONFile();
+            file = createJSONFile( filename);
             FileWriter fw1 = new FileWriter(file);
             BufferedWriter bw1 = new BufferedWriter(fw1);
             bw1.write(linksAsJSON.toJSONString());

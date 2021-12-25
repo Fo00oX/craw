@@ -47,8 +47,8 @@ public class ExporterTest {
     public void writeJSONToFile() {
         //write out data to the test files
         setUp();
-        file = exporter.createJSONFile();
-        exporter.saveLinksAsJSON(jsonArray);
+        file = exporter.createJSONFile("links.json");
+        exporter.saveLinksAsJSON("links.json", jsonArray);
 
         assertTrue(file.exists());
         assertTrue(file.isFile());
