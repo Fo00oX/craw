@@ -36,7 +36,6 @@ public class App extends BaseCommand {
 
     public static void main(String... args) {
         App app = new App();
-        // If initialization is required, follow this guide: https://picocli.info/#_initialization_before_execution
         new CommandLine(app)
                 .execute(args);
     }
