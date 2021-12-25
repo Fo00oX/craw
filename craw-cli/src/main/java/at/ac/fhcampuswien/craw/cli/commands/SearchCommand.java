@@ -35,7 +35,7 @@ public class SearchCommand extends BaseCommand {
      * @return the full query joined into a single String
      */
     private String getQuery() {
-        return String.join("", queryStrings);
+        return String.join(" ", queryStrings);
     }
 
     @Override
