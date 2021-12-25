@@ -67,7 +67,7 @@ public class SearchCommandTests extends CliTestBase {
 
         // assert
         expectSuccessExitCode();
-        assertTrue(output.startsWith("Found "));
+        assertFalse(output.startsWith("Found "));
         assertTrue(output.contains("https://"));
         assertFalse(output.contains("FH Campus Wien"));
     }
