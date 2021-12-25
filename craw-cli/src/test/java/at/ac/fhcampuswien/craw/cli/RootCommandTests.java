@@ -16,11 +16,11 @@ public class RootCommandTests extends CliTestBase {
     @Test
     void testVersion() {
         // act
-        int exitCode = cmd.execute("--version");
+        exitCode = cmd.execute("--version");
         String output = out.toString();
 
         // assert
-        expectSuccessExitCode(exitCode);
+        expectSuccessExitCode();
         assertTrue(output.contains(App.VERSION));
         assertTrue(output.contains("version"));
     }
@@ -33,11 +33,11 @@ public class RootCommandTests extends CliTestBase {
     @ValueSource(strings = {"--help", "-h", "-?", "-V?", "-Vh", "-?V", "-hV"})
     void testHelp(String arg) {
         // act
-        int exitCode = cmd.execute(arg);
+        exitCode = cmd.execute(arg);
         String output = out.toString();
 
         // assert
-        expectSuccessExitCode(exitCode);
+        expectSuccessExitCode();
         assertTrue(output.contains("Usage: craw"));
         assertTrue(output.contains("--version"));
         assertTrue(output.contains("--help"));
@@ -52,11 +52,11 @@ public class RootCommandTests extends CliTestBase {
     @ValueSource(strings = {"notACommand", "-1"})
     void failIfNoOrIncorrectCommandSpecified(String args) {
         // act
-        int exitCode = cmd.execute(args);
+        exitCode = cmd.execute(args);
         String output = err.toString();
 
         // assert
-        expectFailedExitCode(exitCode);
+        expectFailedExitCode();
         assertTrue(output.contains(args)); // ensure that the error message actually contains the invalid arguments
     }
 }

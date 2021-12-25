@@ -14,11 +14,11 @@ public class SearchCommandTests extends CliTestBase {
     @ValueSource(strings = {"--help", "-h", "-?"})
     void testHelp(String arg) {
         // act
-        int exitCode = cmd.execute("search", arg);
+        exitCode = cmd.execute("search", arg);
         String output = out.toString();
 
         // assert
-        expectSuccessExitCode(exitCode);
+        expectSuccessExitCode();
         assertTrue(output.contains("Usage: craw search"));
         assertTrue(output.contains("--help"));
     }

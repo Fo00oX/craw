@@ -14,11 +14,11 @@ public class PageCommandTests extends CliTestBase {
     @ValueSource(strings = {"--help", "-h", "-?"})
     void testHelp(String arg) {
         // act
-        int exitCode = cmd.execute("page", arg);
+        exitCode = cmd.execute("page", arg);
         String output = out.toString();
 
         // assert
-        expectSuccessExitCode(exitCode);
+        expectSuccessExitCode();
         assertTrue(output.contains("Usage: craw page"));
         assertTrue(output.contains("--help"));
     }
