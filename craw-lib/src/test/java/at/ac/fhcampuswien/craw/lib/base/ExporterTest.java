@@ -1,61 +1,58 @@
 package at.ac.fhcampuswien.craw.lib.base;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+import at.ac.fhcampuswien.craw.lib.model.Weblink;
+
 public class ExporterTest {
 
-    Path path;
     File file;
-
-    /* This directory and the files created in it will be deleted after
-     * tests are run, even in the event of failures or exceptions.
-     */
-    @TempDir
-    Path tempDir;
+    List<Weblink> links;
+    Exporter exporter;
+    JSONArray jsonArray;
 
     /* executed before every test: create two temporary files */
     @BeforeEach
     public void setUp() {
+        this.links = new ArrayList<>();
+        this.links.add(new Weblink("www.google.at", "google"));
+        this.links.add(new Weblink("www.orf.at", "orf"));
+        this.links.add(new Weblink("www.github.at", "github"));
+
         try {
-            path = tempDir.resolve("testfile1.json");
-        } catch (InvalidPathException ipe) {
-            System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
+        this.jsonArray = exporter.convertLinksToJsonFormat(links);
+
+        } catch (Exception e){
+            System.out.println(e);
         }
 
-        file = path.toFile();
+        exporter = new Exporter();
     }
 
     /**
      * Write to the two temporary files and run some asserts.
      */
     @Test
-    public void writeJsonToFile() {
-
+    public void writeJSONToFile() {
         //write out data to the test files
-        try {
-            FileWriter fw1 = new FileWriter(file);
-            BufferedWriter bw1 = new BufferedWriter(fw1);
-
-            JSONObject testJSON = new JSONObject();
-            testJSON.put("Link1", "www.google.at");
-
-            bw1.write(testJSON.toJSONString());
-            bw1.close();
-        } catch (IOException ioe) {
-            System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
-        }
+        setUp();
+        file = exporter.createJSONFile();
+        exporter.saveLinksAsJSON(jsonArray);
 
         assertTrue(file.exists());
         assertTrue(file.isFile());
 
-        assertTrue(file.getAbsolutePath().endsWith("testfile1.json"));
+        assertTrue(file.getAbsolutePath().endsWith(".json"));
     }
 }
