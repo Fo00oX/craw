@@ -55,13 +55,11 @@ public class Exporter {
             linksAsJSON.put("name", link.getName());
             linksAsJSON.put("URL", link.getURL());
             json.add(linksAsJSON);
-            System.out.println(json.toJSONString());
-            System.out.println();
         }
         return json;
     }
 
-    public File createJSONFile(String filename) {
+    private File createFile(String filename) {
         try {
             return new File(filename);
         } catch (InvalidPathException ipe) {
@@ -70,9 +68,16 @@ public class Exporter {
         return null;
     }
 
-    public void saveLinksAsJSON(String filename, JSONArray linksAsJSON) {
+    private void saveLinksAsJSON(String filename, JSONArray linksAsJSON) {
         try {
-            file = createJSONFile( filename);
+            if (!filename.contains("/")) {
+                String pathToDownloads = System.getProperty("user.home") + "/Downloads/";
+                file = createFile(pathToDownloads + filename);
+            } else {
+                new File("../temp/").mkdirs();
+                String pathToTempFolder = "../temp/";
+                file = createFile(pathToTempFolder + filename);
+            }
             FileWriter fw1 = new FileWriter(file);
             BufferedWriter bw1 = new BufferedWriter(fw1);
             bw1.write(linksAsJSON.toJSONString());
