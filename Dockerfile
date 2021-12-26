@@ -1,11 +1,12 @@
 #Build-Stage 0
-FROM openjdk:11 AS BUILD_IMAGE
+FROM gradle:7.3-jdk11 AS BUILD_IMAGE
 
 COPY . /app
 
-#remove existing artifacts and rebuild the project
 WORKDIR /app
-RUN ./gradlew clean build
+
+#remove existing artifacts and rebuild the project
+RUN gradle clean build
 
 #Build-Stage 1
 FROM openjdk:11-jre
