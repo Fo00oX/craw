@@ -1,18 +1,18 @@
 package at.ac.fhcampuswien.craw.lib.base;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.json.simple.JSONArray;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
@@ -30,14 +30,12 @@ public class ExporterTest {
         this.links.add(new Weblink("www.orf.at", "orf"));
         this.links.add(new Weblink("www.github.at", "github"));
 
+        exporter = new Exporter();
     }
 
     @Test
     public void writeJSON() throws IOException {
         setUp();
-        exporter = new Exporter();
-
-
         try {
             this.jsonArray = exporter.convertLinksToJsonFormat(links);
 
@@ -55,7 +53,6 @@ public class ExporterTest {
         assertEquals(file.getName(), "links.json");
 
         String fileContent = getFileContent(pathToFile);
-
 
         assertEquals(this.jsonArray.toString(), fileContent);
 
