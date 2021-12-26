@@ -24,3 +24,6 @@
 out/
 .idea/
 *.iml
+
+# Exporter
+temp/
