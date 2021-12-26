@@ -8,7 +8,7 @@ function run {
   docker run -d --name craw-cli craw-cli
 }
 
-function start {
+function startup {
   echo "Starting craw-cli container..."
   docker start craw-cli
 }
@@ -30,7 +30,7 @@ if ( $args.count -eq 0 ) {
         run
       }
       else {
-        start
+        startup
       }
     }
     else {
@@ -56,7 +56,7 @@ if ( $args[0] -eq "--run" ) {
 }
 
 if ( $args[0] -eq "--start" ) {
-  start
+  startup
 }
 
 if ( $args[0] -eq "--help" ) {
