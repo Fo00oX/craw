@@ -69,7 +69,7 @@ if [ "$1" = "--help" ]
 then
   echo "Usage: ./start.sh [OPTION]
 
-arguments (optional):
+Arguments (optional):
 --rebuild   removes the image and redeploys a new container with a new image
 --build     builds the craw-cli image
 --run       launches a non-existent craw-cli container from a pre-built image 
