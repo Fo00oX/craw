@@ -79,12 +79,12 @@ public class Exporter {
         saveLinksAsJSON(filename, linksAsJSON);
     }
 
-    public JSONArray convertLinksToJsonFormat(List<Weblink> links) {
+    private JSONArray convertLinksToJsonFormat(List<Weblink> links) {
         JSONArray json = new JSONArray();
         for (Weblink link : links) {
             JSONObject linksAsJSON = new JSONObject();
-            linksAsJSON.put("name", link.getName());
             linksAsJSON.put("URL", link.getURL());
+            linksAsJSON.put("name", link.getName());
             json.add(linksAsJSON);
         }
         return json;

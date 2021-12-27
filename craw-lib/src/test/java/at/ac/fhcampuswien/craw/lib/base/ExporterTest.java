@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +20,9 @@ public class ExporterTest {
     private File file;
     private List<Weblink> links;
     private Exporter exporter;
-    private JSONArray jsonArray;
     private String pathToFile;
     private String testYaml;
+    private String testJson;
 
     @BeforeEach
     public void setUp() {
@@ -36,6 +35,9 @@ public class ExporterTest {
                 + "- {URL: www.google.at, name: google}"
                 + "- {URL: www.orf.at, name: orf}"
                 + "- {URL: www.github.at, name: github}";
+
+        this.testJson = "[{\"name\":\"google\",\"URL\":\"www.google.at\"},{\"name\":\"orf\",\"URL\":\"www.orf.at\"}," +
+                "{\"name\":\"github\",\"URL\":\"www.github.at\"}]";
 
         exporter = new Exporter();
 
@@ -60,12 +62,6 @@ public class ExporterTest {
         setUp();
         this.pathToFile = "../temp/links.json";
         file = new File(pathToFile);
-        try {
-            this.jsonArray = exporter.convertLinksToJsonFormat(links);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
         exporter.writeJSON(this.pathToFile, this.links);
 
@@ -75,7 +71,7 @@ public class ExporterTest {
 
         String fileContent = getFileContent(this.pathToFile);
 
-        assertEquals(this.jsonArray.toString(), fileContent);
+        assertEquals(this.testJson, fileContent);
     }
 
     private String getFileContent(String pathToFile) throws IOException {
