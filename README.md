@@ -29,7 +29,8 @@ Arguments (optional):
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
 --help      prints a help message
-
+```
+`
 #### Usage on Windows:
 ```powershell
 .\start.ps1 [OPTION]
