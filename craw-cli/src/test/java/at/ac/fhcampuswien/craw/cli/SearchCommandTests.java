@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SearchCommandTests extends CliTestBase {
+
     /**
      * Tests the help text option with different options
      * The combinations with V check that the help option correctly activates even if the option is combined with other options
@@ -73,4 +74,20 @@ public class SearchCommandTests extends CliTestBase {
     }
 
     // TODO test if number of results override works (requires additional results)
+
+    /*
+    @ParameterizedTest
+    @CsvSource({
+            "-j,test.json,test.json"
+    })
+    void testOutputToFile(String arg, String filename, String expectedFilename, @TempDir Path tmpDir) {
+        // arrange
+
+
+        // act
+        exitCode = cmd.execute("search", arg);
+
+        // assert
+        expectSuccessExitCode();
+    }*/
 }

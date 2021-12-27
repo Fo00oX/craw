@@ -47,5 +47,6 @@ public class SearchCommand extends BaseLinkOutputCommand {
 
         if (!linksOnly) spec.commandLine().getOut().println(String.format("Found %d results:", result.size()));
         printWeblinks(result);
+        //outputWeblinksToFilesIfRequired(result);
     }
 }
