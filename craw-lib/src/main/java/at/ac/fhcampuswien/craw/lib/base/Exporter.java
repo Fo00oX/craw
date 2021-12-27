@@ -1,29 +1,21 @@
 package at.ac.fhcampuswien.craw.lib.base;
 
-import at.ac.fhcampuswien.craw.lib.model.Weblink;
-
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.InvalidPathException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import com.esotericsoftware.yamlbeans.YamlWriter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
+
+import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 /**
  * @author Thonhauser
@@ -32,6 +24,15 @@ import org.yaml.snakeyaml.representer.Representer;
 public class Exporter {
 
     private List<Weblink> links;
+
+
+    public void setLinks(List<Weblink> links) {
+        this.links = links;
+    }
+
+    public List<Weblink> getLinks() {
+        return links;
+    }
 
     /**
      * Writes a list of Weblinks to a .yaml/yml file
@@ -115,20 +116,5 @@ public class Exporter {
         } catch (IOException ioe) {
             System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
         }
-    }
-
-    public static void main(String[] args) {
-        Exporter exporter = new Exporter();
-        List<Weblink> links = new ArrayList<Weblink>();
-        links.add(new Weblink("www.google.at", "google"));
-        exporter.writeYAML("links.yaml", links);
-    }
-
-    public void setLinks(List<Weblink> links) {
-        this.links = links;
-    }
-
-    public List<Weblink> getLinks() {
-        return links;
     }
 }
