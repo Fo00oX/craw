@@ -11,6 +11,17 @@ public class Weblink {
         this.name = name;
     }
 
+    public Weblink() {
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getURL() {
         return URL;
     }

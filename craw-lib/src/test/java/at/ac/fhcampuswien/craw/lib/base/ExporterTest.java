@@ -8,9 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.simple.JSONArray;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +20,11 @@ import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 public class ExporterTest {
 
-    File file;
-    List<Weblink> links;
-    Exporter exporter;
-    JSONArray jsonArray;
+    private File file;
+    private List<Weblink> links;
+    private Exporter exporter;
+    private JSONArray jsonArray;
+    private String pathToFile;
 
     @BeforeEach
     public void setUp() {
@@ -30,12 +33,30 @@ public class ExporterTest {
         this.links.add(new Weblink("www.orf.at", "orf"));
         this.links.add(new Weblink("www.github.at", "github"));
 
+
         exporter = new Exporter();
+
+    }
+
+    @Ignore
+    public void writeYAML() throws IOException {
+        setUp();
+        this.pathToFile = "../temp/links.yaml";
+        System.out.println(Arrays.deepToString(this.links.toArray()));
+        this.exporter.writeYAML(this.pathToFile, links);
+
+        file = new File(pathToFile);
+        assert (file.exists());
+        assert (file.isFile());
+        assertEquals("links.yaml", this.file.getName());
+        assertEquals("hello", getFileContent(pathToFile));
     }
 
     @Test
     public void writeJSON() throws IOException {
         setUp();
+        this.pathToFile = "../temp/links.json";
+        file = new File(pathToFile);
         try {
             this.jsonArray = exporter.convertLinksToJsonFormat(links);
 
@@ -43,19 +64,15 @@ public class ExporterTest {
             System.out.println(e);
         }
 
-        new File("../temp/").mkdirs();
-        String pathToFile = "../temp/links.json";
-        file = new File(pathToFile);
-        exporter.writeJSON(pathToFile, this.links);
+        exporter.writeJSON(this.pathToFile, this.links);
 
         assert (file.exists());
         assert (file.isFile());
-        assertEquals(file.getName(), "links.json");
+        assertEquals("links.json", file.getName());
 
-        String fileContent = getFileContent(pathToFile);
+        String fileContent = getFileContent(this.pathToFile);
 
         assertEquals(this.jsonArray.toString(), fileContent);
-
     }
 
     private String getFileContent(String pathToFile) throws IOException {
