@@ -8,11 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.json.simple.JSONArray;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +23,7 @@ public class ExporterTest {
     private Exporter exporter;
     private JSONArray jsonArray;
     private String pathToFile;
+    private String testYaml;
 
     @BeforeEach
     public void setUp() {
@@ -33,23 +32,27 @@ public class ExporterTest {
         this.links.add(new Weblink("www.orf.at", "orf"));
         this.links.add(new Weblink("www.github.at", "github"));
 
+        this.testYaml = "links:"
+                + "- {URL: www.google.at, name: google}"
+                + "- {URL: www.orf.at, name: orf}"
+                + "- {URL: www.github.at, name: github}";
 
         exporter = new Exporter();
 
     }
 
-    @Ignore
+    @Test
     public void writeYAML() throws IOException {
         setUp();
         this.pathToFile = "../temp/links.yaml";
-        System.out.println(Arrays.deepToString(this.links.toArray()));
         this.exporter.writeYAML(this.pathToFile, links);
 
         file = new File(pathToFile);
         assert (file.exists());
         assert (file.isFile());
         assertEquals("links.yaml", this.file.getName());
-        assertEquals("hello", getFileContent(pathToFile));
+
+        assertEquals(this.testYaml, getFileContent(pathToFile));
     }
 
     @Test
