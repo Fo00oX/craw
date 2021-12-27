@@ -20,7 +20,7 @@ If the container is already running, the image is going to be **rebuild** and a 
 In case the image is already present and the container has exited or has been removed, a new container with the existing image is being **started**.
 
 #### Usage on MacOS / Linux:
-```bash
+```
 ./start.sh [OPTION]
 
 Arguments (optional):
@@ -32,7 +32,7 @@ Arguments (optional):
 ```
 
 #### Usage on Windows:
-```powershell
+```
 .\start.ps1 [OPTION]
 
 Arguments (optional):
@@ -48,11 +48,11 @@ Arguments (optional):
 In order to communicate with the dockerized application the `craw-wrapper` is required which translates all CLI arguments from the host system into the container and returns the stdout of the container.
 
 #### Usage on MacOS/Linux:
-```bash
+```
 ./craw-wrapper foo bar
 ```
 
 #### Usage on Windows:
-```powershell
+```
 .\craw-wrapper.ps1 foo bar
 ```
