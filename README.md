@@ -21,7 +21,7 @@ In case the image is already present and the container has exited or has been re
 
 #### Usage on MacOS / Linux:
 ```bash
-./start.sh <arg>
+./start.sh [OPTION]
 
 args (optional):
 --rebuild   removes the image and redeploys a new container with a new image
@@ -29,12 +29,10 @@ args (optional):
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
 --help      prints a help message
-```
 
 #### Usage on Windows:
 ```powershell
-.\start.ps1 <arg>
-
+.\start.ps1 [OPTION]
 
 args (optional):
 --rebuild   removes the image and redeploys a new container with a new image
@@ -42,7 +40,6 @@ args (optional):
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
 --help      prints a help message
-```
 
 ### Craw-Wrapper
 

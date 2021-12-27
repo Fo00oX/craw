@@ -60,7 +60,7 @@ if ( $args[0] -eq "--start" ) {
 }
 
 if ( $args[0] -eq "--help" ) {
-  echo "Usage: ./start.sh <arg>
+  echo "Usage: ./start.sh [OPTION]
 
 args (optional):
 --rebuild   removes the image and redeploys a new container with a new image

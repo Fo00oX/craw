@@ -67,7 +67,7 @@ fi
 
 if [ "$1" = "--help" ]
 then
-  echo "Usage: ./start.sh <arg>
+  echo "Usage: ./start.sh [OPTION]
 
 args (optional):
 --rebuild   removes the image and redeploys a new container with a new image
