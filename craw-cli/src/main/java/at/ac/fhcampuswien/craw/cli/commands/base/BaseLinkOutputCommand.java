@@ -13,7 +13,7 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
 
     @Option(
             names = {"--linksOnly", "-l"},
-            description = "If specified, prints only the discovered links without additional information.",
+            description = "If specified, prints only the discovered links without additional output.",
             defaultValue = "false"
     )
     protected boolean linksOnly;
