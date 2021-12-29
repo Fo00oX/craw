@@ -47,7 +47,7 @@ Arguments (optional):
 
 In order to communicate with the dockerized application the `craw-wrapper` is required which translates all CLI arguments from the host system into the container and returns the stdout of the container.
 
-#### Usage on MacOS/Linux:
+#### Usage on MacOS / Linux:
 ```
 ./craw-wrapper foo bar
 ```
