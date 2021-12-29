@@ -1,17 +1,27 @@
 package at.ac.fhcampuswien.craw.lib.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
-
-@Data
-@Builder
-@ToString
 public class Weblink {
-    private String URL;
-    private String Name;
+    private String url;
+    private String name;
 
-    public String prettifiedString() {
-        return String.format("%s:  %s", getName(), getURL());
+    public Weblink(String URL, String name) {
+        this.url = URL;
+        this.name = name;
+    }
+
+    public void setURL(String URL) {
+        this.url = URL;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getURL() {
+        return url;
+    }
+
+    public String getName() {
+        return name;
     }
 }
