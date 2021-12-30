@@ -12,14 +12,14 @@ public class Crawler {
         //TODO add functionality
         return List.of(
                 // Testdata
-                Weblink.builder()
-                        .Name("Link1")
-                        .URL("https://track.craw.dataspeak.at/")
-                        .build(),
-                Weblink.builder()
-                        .Name("Link2")
-                        .URL("https://track.craw.dataspeak.at/projects/61edb02c-bc65-4a0a-a71b-9b0639200aba/")
-                        .build()
+                new Weblink(
+                        "https://track.craw.dataspeak.at/",
+                        "Link1"
+                ),
+                new Weblink(
+                        "https://track.craw.dataspeak.at/projects/61edb02c-bc65-4a0a-a71b-9b0639200aba/",
+                        "Link2"
+                )
         );
     }
 }
