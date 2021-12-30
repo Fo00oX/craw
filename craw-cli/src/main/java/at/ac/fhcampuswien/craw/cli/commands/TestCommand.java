@@ -9,10 +9,10 @@ import java.util.List;
 import static picocli.CommandLine.*;
 
 @Command(
-        name = "search",
-        description = "Run a Google search using a specified query."
+        name = "test",
+        description = "Check a page for broken links."
 )
-public class SearchCommand extends BaseLinkOutputCommand {
+public class TestCommand extends BaseLinkOutputCommand {
 
     @Parameters(
             paramLabel = "query",

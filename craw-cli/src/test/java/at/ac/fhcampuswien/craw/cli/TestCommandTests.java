@@ -1,13 +1,19 @@
 package at.ac.fhcampuswien.craw.cli;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.nio.file.Path;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SearchCommandTests extends CliTestBase {
+@Disabled
+public class TestCommandTests extends CliTestBase {
 
     /**
      * Tests the help text option with different options
@@ -75,7 +81,7 @@ public class SearchCommandTests extends CliTestBase {
 
     // TODO test if number of results override works (requires additional results)
 
-    /*
+
     @ParameterizedTest
     @CsvSource({
             "-j,test.json,test.json"
@@ -89,5 +95,5 @@ public class SearchCommandTests extends CliTestBase {
 
         // assert
         expectSuccessExitCode();
-    }*/
+    }
 }
