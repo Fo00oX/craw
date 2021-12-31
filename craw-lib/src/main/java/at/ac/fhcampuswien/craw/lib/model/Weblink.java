@@ -1,21 +1,16 @@
 package at.ac.fhcampuswien.craw.lib.model;
 
 public class Weblink {
-    private String URL;
+    private String url;
     private String name;
 
-    // TODO Getter + Setters
-
     public Weblink(String URL, String name) {
-        this.URL = URL;
+        this.url = URL;
         this.name = name;
     }
 
-    public Weblink() {
-    }
-
     public void setURL(String URL) {
-        this.URL = URL;
+        this.url = URL;
     }
 
     public void setName(String name) {
@@ -23,7 +18,7 @@ public class Weblink {
     }
 
     public String getURL() {
-        return URL;
+        return url;
     }
 
     public String getName() {
