@@ -1,7 +1,7 @@
 package at.ac.fhcampuswien.craw.cli;
 
+import at.ac.fhcampuswien.craw.cli.commands.CheckCommand;
 import at.ac.fhcampuswien.craw.cli.commands.PageCommand;
-import at.ac.fhcampuswien.craw.cli.commands.TestCommand;
 import at.ac.fhcampuswien.craw.cli.commands.base.BaseCommand;
 import picocli.AutoComplete;
 import picocli.CommandLine;
@@ -24,7 +24,7 @@ import static picocli.CommandLine.Command;
         synopsisSubcommandLabel = "COMMAND",
         subcommands = {
                 PageCommand.class,
-                TestCommand.class,
+                CheckCommand.class,
                 AutoComplete.GenerateCompletion.class
         }
 )

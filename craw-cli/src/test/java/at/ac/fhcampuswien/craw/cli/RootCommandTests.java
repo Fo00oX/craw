@@ -43,7 +43,7 @@ public class RootCommandTests extends CliTestBase {
         assertTrue(output.contains("--help"));
         assertTrue(output.contains("Commands:"));
         assertTrue(output.contains("page"));
-        assertTrue(output.contains("test"));
+        assertTrue(output.contains("check"));
         assertTrue(output.contains("generate-completion"));
     }
 

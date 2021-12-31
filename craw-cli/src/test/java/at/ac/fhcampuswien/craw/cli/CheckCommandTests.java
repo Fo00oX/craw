@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Disabled
-public class TestCommandTests extends CliTestBase {
+public class CheckCommandTests extends CliTestBase {
 
     /**
      * Tests the help text option with different options
