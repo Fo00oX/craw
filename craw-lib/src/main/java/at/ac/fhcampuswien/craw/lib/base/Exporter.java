@@ -17,10 +17,6 @@ import org.yaml.snakeyaml.representer.Representer;
 
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
-/**
- * @author Thonhauser
- */
-
 public class Exporter {
 
     private List<Weblink> links;
@@ -40,7 +36,7 @@ public class Exporter {
      * @param filename the path and name of the file
      * @param links
      */
-    public void writeYAML(String filename, List<Weblink> links) {
+    public void writeYAML(String filename, List<Weblink> links) throws FileNotFoundException {
         if (!filename.endsWith(".yml") && !filename.endsWith(".yaml")) {
             filename += ".yml";
         }
@@ -49,12 +45,12 @@ public class Exporter {
         saveLinksAsYAML(links, file);
     }
 
-    private void saveLinksAsYAML(List<Weblink> links, File file) {
-        PrintWriter writer = null;
+    private void saveLinksAsYAML(List<Weblink> links, File file) throws FileNotFoundException {
+        PrintWriter writer;
         try {
             writer = new PrintWriter(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException fnfe) {
+            throw fnfe;
         }
         Representer representer = new Representer();    //removes default tag
         representer.addClassTag(Exporter.class, Tag.MAP);
@@ -70,7 +66,7 @@ public class Exporter {
      * @param filename the path and name of the file
      * @param links
      */
-    public void writeJSON(String filename, List<Weblink> links) {
+    public void writeJSON(String filename, List<Weblink> links) throws IOException {
 
         if (!filename.endsWith(".json")) {
             filename += ".json";
@@ -101,12 +97,11 @@ public class Exporter {
                 return new File(pathToTempFolder + filename);
             }
         } catch (InvalidPathException ipe) {
-            System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
+            throw ipe;
         }
-        return null;
     }
 
-    private void saveLinksAsJSON(String filename, JSONArray linksAsJSON) {
+    private void saveLinksAsJSON(String filename, JSONArray linksAsJSON) throws IOException {
         try {
             File file = getFile(filename);
             FileWriter fw1 = new FileWriter(file);
@@ -114,7 +109,7 @@ public class Exporter {
             bw1.write(linksAsJSON.toJSONString());
             bw1.close();
         } catch (IOException ioe) {
-            System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
+            throw ioe;
         }
     }
 }

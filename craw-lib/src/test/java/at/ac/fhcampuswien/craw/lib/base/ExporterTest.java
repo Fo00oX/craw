@@ -87,10 +87,8 @@ public class ExporterTest {
                 line = br.readLine();
             }
             fileContent = sb.toString().replace("\n", "").replace("\r", "");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            throw ioe;
         } finally {
             br.close();
         }
