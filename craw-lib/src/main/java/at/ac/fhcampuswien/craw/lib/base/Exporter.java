@@ -83,7 +83,7 @@ public class Exporter {
         JSONArray json = new JSONArray();
         for (Weblink link : links) {
             JSONObject linksAsJSON = new JSONObject();
-            linksAsJSON.put("URL", link.getURL());
+            linksAsJSON.put("URL", link.getUrl());
             linksAsJSON.put("name", link.getName());
             json.add(linksAsJSON);
         }
