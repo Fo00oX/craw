@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.craw.lib.advanced;
 
 
-
 import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
@@ -18,9 +17,9 @@ public class LinkChecker {
 
     //TODO: JavaDoc and Unit Tests
 
-    public List<Weblink> checkLinks (List<Weblink> urls){
+    public List<Weblink> checkLinks(List<Weblink> urls) {
         List<Weblink> brokenLinks = new ArrayList<>();
-        for (Weblink weblink: urls){
+        for (Weblink weblink : urls) {
             try {
                 URL url = new URL(weblink.getURL());
                 try {
@@ -32,11 +31,11 @@ public class LinkChecker {
                     int responseCode = connection.getResponseCode();
 
                     // Currently only checking if server doesn't respond with status code 200. Implies that redirects are not supported.
-                    if (responseCode != HTTP_OK){
+                    if (responseCode != HTTP_OK) {
                         BrokenLink brokenLink = new BrokenLink(weblink.getURL(), weblink.getName(), BrokenLink.States.NOT_OK);
                         brokenLinks.add(brokenLink);
                     }
-                } catch (IOException e){ // URL is well-formed but issue during connecting to host(not reachable) or writing/reading from host.
+                } catch (IOException e) { // URL is well-formed but issue during connecting to host(not reachable) or writing/reading from host.
                     BrokenLink brokenLink = new BrokenLink(weblink.getURL(), weblink.getName(), BrokenLink.States.CONNECTION_ERROR);
                     brokenLinks.add(brokenLink);
 
