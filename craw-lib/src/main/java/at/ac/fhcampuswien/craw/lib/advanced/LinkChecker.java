@@ -15,8 +15,17 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class LinkChecker {
 
-    //TODO: JavaDoc
-
+    /**
+     * Returns a list of broken links in form of a list of BrokenLink Object(inherits from Weblink)
+     * where the status is saved as an attribute.
+     * There are three cases of "brokenness":
+     * - malformed URL
+     * - could not write/read from or connect to URL
+     * - HTTP response is not 200
+     * CAUTION! FUNCTION ONLY WORKS WITH HTTPS LINKS!!
+     * @param urls is a List of Weblink Objects gathered by the Crawler
+     * @return the list of broken links from the list of URLs
+     */
     public List<Weblink> checkLinks(List<Weblink> urls) {
         List<Weblink> brokenLinks = new ArrayList<>();
         for (Weblink weblink : urls) {
