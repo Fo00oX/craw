@@ -15,7 +15,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class LinkChecker {
 
-    //TODO: JavaDoc and Unit Tests
+    //TODO: JavaDoc
 
     public List<Weblink> checkLinks(List<Weblink> urls) {
         List<Weblink> brokenLinks = new ArrayList<>();
