@@ -2,7 +2,7 @@ package at.ac.fhcampuswien.craw.lib.model;
 
 public class BrokenLink extends Weblink {
 
-    // IntelliJ suggested to make this final. Rethink if it makes sense. It also makes sense not to be static.
+    // IntelliJ suggested making this final. Rethink if it makes sense. It also makes sense not to be static.
     private final States linkStatus;
 
     /*
