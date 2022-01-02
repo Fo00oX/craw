@@ -3,7 +3,7 @@ package at.ac.fhcampuswien.craw.cli;
 import at.ac.fhcampuswien.craw.cli.commands.CheckCommand;
 import at.ac.fhcampuswien.craw.cli.commands.PageCommand;
 import at.ac.fhcampuswien.craw.cli.commands.base.BaseCommand;
-import picocli.AutoComplete;
+import picocli.AutoComplete.GenerateCompletion;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
@@ -25,7 +25,7 @@ import static picocli.CommandLine.Command;
         subcommands = {
                 PageCommand.class,
                 CheckCommand.class,
-                AutoComplete.GenerateCompletion.class
+                GenerateCompletion.class
         }
 )
 public class App extends BaseCommand {

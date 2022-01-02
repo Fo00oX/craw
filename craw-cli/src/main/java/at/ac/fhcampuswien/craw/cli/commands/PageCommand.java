@@ -1,7 +1,13 @@
 package at.ac.fhcampuswien.craw.cli.commands;
 
-import at.ac.fhcampuswien.craw.cli.commands.base.BaseCommand;
 import at.ac.fhcampuswien.craw.cli.commands.base.BaseLinkOutputCommand;
+import at.ac.fhcampuswien.craw.lib.base.Crawler;
+import at.ac.fhcampuswien.craw.lib.model.Weblink;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Parameters;
+
+import java.net.URL;
+import java.util.List;
 
 import static picocli.CommandLine.Command;
 
@@ -10,8 +16,22 @@ import static picocli.CommandLine.Command;
         description = "Fetch a list of all Links present on a Webpage"
 )
 public class PageCommand extends BaseLinkOutputCommand {
+
+    @Parameters(
+            paramLabel = "url",
+            description = "The URL to scrape all links from."
+    )
+    private URL url;
+
     @Override
     public void run() {
-        spec.commandLine().getOut().println("PageCommand");
+        if (!url.getProtocol().equalsIgnoreCase("http") && !url.getProtocol().equalsIgnoreCase("https"))
+            throw new ParameterException(spec.commandLine(), String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", url.getProtocol()));
+
+        Crawler crawler = new Crawler();
+        List<Weblink> result = crawler.getLinks(url.getQuery());
+
+        if (!linksOnly) spec.commandLine().getOut().println(String.format("Found %d results:", result.size()));
+        printWeblinks(result);
     }
 }

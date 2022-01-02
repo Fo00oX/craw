@@ -22,4 +22,14 @@ public class PageCommandTests extends CliTestBase {
         assertTrue(output.contains("Usage: craw page"));
         assertTrue(output.contains("--help"));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {""})
+    void testInvalidProtocol(String url) {
+        // act
+        exitCode = cmd.execute("page", url);
+        String output = out.toString();
+
+        // assert
+    }
 }
