@@ -4,8 +4,8 @@ import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 public class BrokenLink extends Weblink {
 
-
-    private States linkStatus;
+    // IntelliJ suggested to make this private. Rethink if it makes sense.
+    private static States linkStatus;
 
     // For filtering purposes later on.
     public enum States {
