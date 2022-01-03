@@ -28,6 +28,12 @@ public class LinkChecker {
      */
     public List<Weblink> checkLinks(List<Weblink> urls) {
         List<Weblink> brokenLinks = new ArrayList<>();
+
+        // Added because it is the only way to halt execution of function without crashing. Null should never be passed, but just in case.
+        if (urls == null){
+            return brokenLinks;
+        }
+
         for (Weblink weblink : urls) {
             try {
                 URL url = new URL(weblink.getURL());
