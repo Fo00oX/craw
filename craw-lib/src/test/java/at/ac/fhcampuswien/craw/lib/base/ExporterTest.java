@@ -32,12 +32,12 @@ public class ExporterTest {
         this.links.add(new Weblink("www.github.at", "github"));
 
         this.testYaml = "links:"
-                + "- {URL: www.google.at, name: google}"
-                + "- {URL: www.orf.at, name: orf}"
-                + "- {URL: www.github.at, name: github}";
+                + "- {name: google, url: www.google.at}"
+                + "- {name: orf, url: www.orf.at}"
+                + "- {name: github, url: www.github.at}";
 
-        this.testJson = "[{\"name\":\"google\",\"URL\":\"www.google.at\"},{\"name\":\"orf\",\"URL\":\"www.orf.at\"}," +
-                "{\"name\":\"github\",\"URL\":\"www.github.at\"}]";
+        this.testJson = "[{\"name\":\"google\",\"url\":\"www.google.at\"},{\"name\":\"orf\",\"url\":\"www.orf.at\"}," +
+                "{\"name\":\"github\",\"url\":\"www.github.at\"}]";
 
         exporter = new Exporter();
 
