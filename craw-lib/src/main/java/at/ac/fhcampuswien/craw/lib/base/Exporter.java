@@ -2,10 +2,8 @@ package at.ac.fhcampuswien.craw.lib.base;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.InvalidPathException;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class Exporter {
      * @param filename the path and name of the file
      * @param links
      */
-    public void writeYAML(String filename, List<Weblink> links) throws FileNotFoundException {
+    public void writeYAML(String filename, List<Weblink> links) throws IOException {
         if (!filename.endsWith(".yml") && !filename.endsWith(".yaml")) {
             filename += ".yml";
         }
@@ -45,13 +43,8 @@ public class Exporter {
         saveLinksAsYAML(links, file);
     }
 
-    private void saveLinksAsYAML(List<Weblink> links, File file) throws FileNotFoundException {
-        PrintWriter writer;
-        try {
-            writer = new PrintWriter(file);
-        } catch (FileNotFoundException fnfe) {
-            throw fnfe;
-        }
+    private void saveLinksAsYAML(List<Weblink> links, File file) throws IOException {
+        FileWriter writer = new FileWriter(file);
         Representer representer = new Representer();    //removes default tag
         representer.addClassTag(Exporter.class, Tag.MAP);
         Yaml yaml = new Yaml(representer);
