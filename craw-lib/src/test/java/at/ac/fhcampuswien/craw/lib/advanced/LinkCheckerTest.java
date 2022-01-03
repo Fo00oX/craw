@@ -16,7 +16,7 @@ class LinkCheckerTest {
     private List<Weblink> brokenWeblinks = new ArrayList<>();
     private List<Weblink> brokenWeblinksResults = new ArrayList<>();
     private List<Weblink> weblinksAllValid = new ArrayList<>();
-    private List <Weblink> empty = new ArrayList<>();
+    private List<Weblink> empty = new ArrayList<>();
 
 
     @BeforeEach
@@ -50,19 +50,19 @@ class LinkCheckerTest {
     }
 
     @Test
-    void checkLinksEmpty(){
+    void checkLinksEmpty() {
         brokenWeblinks = linkChecker.checkLinks(empty);
         assertEquals(brokenWeblinks, new ArrayList<>());
     }
 
     @Test
-    void checkLinksAllValid(){
+    void checkLinksAllValid() {
         brokenWeblinks = linkChecker.checkLinks(weblinksAllValid);
         assertEquals(brokenWeblinks, new ArrayList<>());
     }
 
     @Test
-    void checkLinksNull(){
+    void checkLinksNull() {
         brokenWeblinks = linkChecker.checkLinks(null);
         assertEquals(brokenWeblinks, new ArrayList<>());
     }

@@ -23,6 +23,7 @@ public class LinkChecker {
      * - could not write/read from or connect to URL
      * - HTTP response is not 200
      * CAUTION! FUNCTION ONLY WORKS WITH HTTPS LINKS!!
+     *
      * @param urls is a list of Weblink Objects gathered by the Crawler
      * @return a list containing the broken links from the list of URLs
      */
@@ -30,7 +31,7 @@ public class LinkChecker {
         List<Weblink> brokenLinks = new ArrayList<>();
 
         // Added because it is the only way to halt execution of function without crashing. Null should never be passed, but just in case.
-        if (urls == null){
+        if (urls == null) {
             return brokenLinks;
         }
 
