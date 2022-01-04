@@ -47,5 +47,10 @@ public abstract class CliTestBase {
         assertNotEquals(0, exitCode);
     }
 
+    /**
+     * Verifies that the specified Output is equivalent to the specification for the Usage.
+     *
+     * @param output the output that contains the Usage information.
+     */
     protected abstract void expectUsageHelp(String output);
 }
