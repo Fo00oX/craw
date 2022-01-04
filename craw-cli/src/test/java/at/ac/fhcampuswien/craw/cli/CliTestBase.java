@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Provides common methods and initialization that all Cli test classes require.
  */
-public class CliTestBase {
+public abstract class CliTestBase {
     protected App app = new App();
     protected CommandLine cmd = new CommandLine(app);
     protected StringWriter out;
@@ -46,4 +46,6 @@ public class CliTestBase {
         assertNotNull(exitCode);
         assertNotEquals(0, exitCode);
     }
+
+    protected abstract void expectUsageHelp(String output);
 }

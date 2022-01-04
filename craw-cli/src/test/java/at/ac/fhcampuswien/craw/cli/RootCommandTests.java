@@ -13,6 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class RootCommandTests extends CliTestBase {
 
+    @Override
+    protected void expectUsageHelp(String output) {
+        assertTrue(output.contains("Usage: craw"));
+        assertTrue(output.contains("--version"));
+        assertTrue(output.contains("--help"));
+        assertTrue(output.contains("Commands:"));
+        assertTrue(output.contains("page"));
+        assertTrue(output.contains("check"));
+        assertTrue(output.contains("generate-completion"));
+    }
+
     @Test
     void testVersion() {
         // act
@@ -38,13 +49,7 @@ public class RootCommandTests extends CliTestBase {
 
         // assert
         expectSuccessExitCode();
-        assertTrue(output.contains("Usage: craw"));
-        assertTrue(output.contains("--version"));
-        assertTrue(output.contains("--help"));
-        assertTrue(output.contains("Commands:"));
-        assertTrue(output.contains("page"));
-        assertTrue(output.contains("check"));
-        assertTrue(output.contains("generate-completion"));
+        expectUsageHelp(output);
     }
 
     @ParameterizedTest

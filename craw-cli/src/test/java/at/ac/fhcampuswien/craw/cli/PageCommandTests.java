@@ -6,6 +6,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PageCommandTests extends CliTestBase {
+
+    @Override
+    protected void expectUsageHelp(String output) {
+        assertTrue(output.startsWith("Usage: craw page"));
+        assertTrue(output.contains("--help"));
+    }
+
     /**
      * Tests the help text option with different options
      * The combinations with V check that the help option correctly activates even if the option is combined with other options
@@ -19,8 +26,7 @@ public class PageCommandTests extends CliTestBase {
 
         // assert
         expectSuccessExitCode();
-        assertTrue(output.contains("Usage: craw page"));
-        assertTrue(output.contains("--help"));
+        expectUsageHelp(output);
     }
 
     @ParameterizedTest

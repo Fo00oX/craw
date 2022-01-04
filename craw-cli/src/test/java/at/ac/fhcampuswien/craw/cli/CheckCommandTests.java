@@ -15,6 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @Disabled
 public class CheckCommandTests extends CliTestBase {
 
+    @Override
+    protected void expectUsageHelp(String output) {
+        assertTrue(output.contains("Usage: craw search"));
+        assertTrue(output.contains("--help"));
+    }
+
     /**
      * Tests the help text option with different options
      * The combinations with V check that the help option correctly activates even if the option is combined with other options
@@ -28,8 +34,7 @@ public class CheckCommandTests extends CliTestBase {
 
         // assert
         expectSuccessExitCode();
-        assertTrue(output.contains("Usage: craw search"));
-        assertTrue(output.contains("--help"));
+        expectUsageHelp(output);
     }
 
     @ParameterizedTest
