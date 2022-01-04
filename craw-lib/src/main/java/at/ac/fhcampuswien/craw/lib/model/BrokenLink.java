@@ -5,15 +5,25 @@ public class BrokenLink extends Weblink {
     // IntelliJ suggested making this final. Rethink if it makes sense. It also makes sense not to be static.
     private final States linkStatus;
 
-    /*
-        For filtering purposes later on.
-        MALFORMED is when the link is not valid and could not be parsed
-        CONNECTION_ERROR is when there was an error writing/reading from or connecting to the socket
-        NOT_OK is when the HTTP response code != 200
-    */
+    /**
+     * Represents the different error states of a link
+     * For filtering purposes later on.
+     **/
     public enum States {
+
+        /**
+         * MALFORMED is when the link is not valid and could not be parsed
+         **/
         MALFORMED,
+
+        /**
+         * CONNECTION_ERROR is when there was an error writing/reading from or connecting to the socket
+         */
         CONNECTION_ERROR,
+
+        /**
+         * NOT_OK is when the HTTP response code != 200
+         */
         NOT_OK
     }
 
