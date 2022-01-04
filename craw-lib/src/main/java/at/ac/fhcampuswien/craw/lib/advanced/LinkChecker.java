@@ -41,7 +41,6 @@ public class LinkChecker {
                 URL url = new URL(weblink.getURL());
                 try {
                     /*
-                    Doesn't support HTTP links.
                     https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#openConnection()
                     */
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
