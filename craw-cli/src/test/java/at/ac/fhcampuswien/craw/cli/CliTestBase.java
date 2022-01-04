@@ -9,7 +9,7 @@ import java.io.StringWriter;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Provides methods and initialization that all Cli test classes require.
+ * Provides common methods and initialization that all Cli test classes require.
  */
 public class CliTestBase {
     protected App app = new App();
