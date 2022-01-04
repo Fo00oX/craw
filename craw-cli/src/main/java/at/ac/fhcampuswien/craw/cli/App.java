@@ -38,6 +38,8 @@ public class App extends BaseCommand {
         App app = new App();
         new CommandLine(app)
                 .execute(args);
+        // TODO add handling for unexpected Exceptions / Custom Exception Handling
+        // MalformedURLException
     }
 
     @Override
