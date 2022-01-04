@@ -6,6 +6,7 @@ import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class LinkChecker {
      * - malformed URL
      * - could not write/read from or connect to URL
      * - HTTP response is not 200
-     * CAUTION! FUNCTION ONLY WORKS WITH HTTPS LINKS!!
+     *
      *
      * @param urls is a list of Weblink Objects gathered by the Crawler
      * @return a list containing the broken links from the list of URLs
@@ -43,7 +44,7 @@ public class LinkChecker {
                     Doesn't support HTTP links.
                     https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#openConnection()
                     */
-                    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     int responseCode = connection.getResponseCode();
 
                     // Currently only checking if server doesn't respond with status code 200. Implies that redirects are not supported.

@@ -27,12 +27,14 @@ class LinkCheckerTest {
         Weblink link3 = new Weblink("https://airbrake.io/blog/java/connectexception", "Airbrake");
         Weblink link4 = new Weblink("www.google.com", "Google malformed");
         Weblink link5 = new Weblink("https://whatisit.do", "Valid but typo");
+        Weblink link6 = new Weblink("http://whoisthis.com", "http link");
 
         weblinks.add(link1);
         weblinks.add(link2);
         weblinks.add(link3);
         weblinks.add(link4);
         weblinks.add(link5);
+        weblinks.add(link6);
         brokenWeblinksResults.add(link4);
         brokenWeblinksResults.add(link5);
         weblinksAllValid.add(link1);
