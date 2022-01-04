@@ -29,7 +29,7 @@ public class PageCommand extends BaseLinkOutputCommand {
         Crawler crawler = new Crawler();
         List<Weblink> result = crawler.getLinks(url.getQuery());
 
-        if (!linksOnly) spec.commandLine().getOut().println(String.format("Found %d results:", result.size()));
+        out().println(String.format("Found %d results:", result.size()));
         printWeblinks(result);
     }
 }

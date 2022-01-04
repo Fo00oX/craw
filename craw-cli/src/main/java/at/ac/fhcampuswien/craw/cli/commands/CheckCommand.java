@@ -39,13 +39,10 @@ public class CheckCommand extends BaseLinkOutputCommand {
 
     @Override
     public void run() {
-        if (getQuery().isBlank()) // Empty values can bypass the picocli validation that otherwise ensures that a query is specified, so they have to be filtered here
-            throw new ParameterException(spec.commandLine(), "The required parameter query was not specified.");
-
         GoogleSearch search = new GoogleSearch();
         List<Weblink> result = search.searchQuery(getQuery(), nrResults);
 
-        if (!linksOnly) spec.commandLine().getOut().println(String.format("Found %d results:", result.size()));
+        out().println(String.format("Found %d results:", result.size()));
         printWeblinks(result);
         //outputWeblinksToFilesIfRequired(result);
     }

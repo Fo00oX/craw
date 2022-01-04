@@ -47,7 +47,7 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
                 .map(x -> linksOnly ? x.getURL() : x.prettifiedString())
                 .collect(Collectors.toList());
         for (String outStr : result) {
-            spec.commandLine().getOut().println(outStr);
+            out().println(outStr);
         }
     }
 
