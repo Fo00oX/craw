@@ -7,7 +7,6 @@ version '1.0-SNAPSHOT'
 
 dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
-	implementation 'junit:junit:4.13.1'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	implementation 'org.yaml:snakeyaml:1.30'
 	implementation 'com.esotericsoftware.yamlbeans:yamlbeans:1.06'
