@@ -1,9 +1,5 @@
 # Craw - Webcrawler
 
-## Sources
-
-- [Tutorial on setting up a multi-module gradle project](https://docs.gradle.org/current/samples/sample_building_java_applications_multi_project.html)
-
 ## Docker
 In order to enable the possibility of having the **craw-cli** application running on any system independently, it is recommended to use Docker for the deployments.
 
@@ -56,3 +52,7 @@ In order to communicate with the dockerized application the `craw-wrapper` is re
 ```
 .\craw-wrapper.ps1 foo bar
 ```
+## Sources
+
+- [Tutorial on setting up a multi-module gradle project](https://docs.gradle.org/current/samples/sample_building_java_applications_multi_project.html)
+
