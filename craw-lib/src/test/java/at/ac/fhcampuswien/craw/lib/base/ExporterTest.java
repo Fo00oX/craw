@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class ExporterTest {
     File tempDir;
 
     @BeforeAll
-    public static void createLinksMock() {
+    static void createLinksMock() {
         links = new ArrayList<>();
         links.add(new Weblink("www.google.at", "google"));
         links.add(new Weblink("www.orf.at", "orf"));
@@ -35,7 +34,7 @@ public class ExporterTest {
     }
 
     @Test
-    public void writeYAML() throws IOException {
+    void writeYAMLToCustomDirectory() throws IOException {
         //arrange
         File yaml = new File(tempDir, "links.yaml");
         final String testYaml = "links:"
@@ -54,7 +53,7 @@ public class ExporterTest {
     }
 
     @Test
-    public void writeJSON() throws IOException {
+    void writeJSONToCustomDirectory() throws IOException {
         //arrange
         File json = new File(tempDir, "links.json");
         final String testJson = "[" +
