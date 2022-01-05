@@ -1,23 +1,16 @@
 package at.ac.fhcampuswien.craw.cli;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.nio.file.Path;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@Disabled
 public class CheckCommandTests extends CliTestBase {
 
     @Override
     protected void expectUsageHelp(String output) {
-        assertTrue(output.contains("Usage: craw search"));
+        assertTrue(output.startsWith("Usage: craw check"));
         assertTrue(output.contains("--help"));
     }
 
@@ -29,7 +22,7 @@ public class CheckCommandTests extends CliTestBase {
     @ValueSource(strings = {"--help", "-h", "-?"})
     void testHelp(String arg) {
         // act
-        exitCode = cmd.execute("search", arg);
+        exitCode = cmd.execute("check", arg);
         String output = out.toString();
 
         // assert
@@ -42,63 +35,18 @@ public class CheckCommandTests extends CliTestBase {
     @ValueSource(strings = {"  ", "\n", "\r"})
     void testFailOnNoArguments(String arg) {
         // act
-        exitCode = cmd.execute("search", arg);
+        exitCode = cmd.execute("check", arg);
         String output = err.toString();
 
         // assert
         expectFailedExitCode();
-        assertEquals(
-                "The required parameter query was not specified.",
-                output.substring(0, output.indexOf('\r'))
-        ); // Verify correct error message is printed. After the error message Usage help is automatically printed after a newline.
-        assertTrue(output.contains("Usage: craw search"));
-        assertTrue(output.contains("--help"));
+        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):")); // Verify correct error message is printed.
+        expectUsageHelpOnEndOfString(output);
     }
 
-    // TODO This test should be replaced by a Test run within a proper testing environment instead of relying on Googles Search results to never change
-    @Test
-    void testFetchCorrectQuery() {
-        // act
-        exitCode = cmd.execute("search", "FH", "Campus", "Wien");
-        String output = out.toString();
+    // TODO The following Tests are still pending (require the completion of base features and proper testdata)
+    // No links on Page
+    // All valid links on page
+    // Mixed Link success
 
-        // assert
-        expectSuccessExitCode();
-        assertTrue(output.contains("FH Campus Wien"));
-        assertTrue(output.startsWith("Found "));
-        assertTrue(output.contains("https://"));
-    }
-
-    // TODO This test should be replaced by a Test run within a proper testing environment instead of relying on Googles Search results to never change
-    @ParameterizedTest
-    @ValueSource(strings = {"-l", "--linksOnly"})
-    void testFetchCorrectQueryLinksOnly(String arg) {
-        // act
-        exitCode = cmd.execute("search", arg, "FH", "Campus", "Wien");
-        String output = out.toString();
-
-        // assert
-        expectSuccessExitCode();
-        assertFalse(output.startsWith("Found "));
-        assertTrue(output.contains("https://"));
-        assertFalse(output.contains("FH Campus Wien"));
-    }
-
-    // TODO test if number of results override works (requires additional results)
-
-
-    @ParameterizedTest
-    @CsvSource({
-            "-j,test.json,test.json"
-    })
-    void testOutputToFile(String arg, String filename, String expectedFilename, @TempDir Path tmpDir) {
-        // arrange
-
-
-        // act
-        exitCode = cmd.execute("search", arg);
-
-        // assert
-        expectSuccessExitCode();
-    }
 }
