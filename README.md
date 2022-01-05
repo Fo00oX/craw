@@ -11,7 +11,7 @@ The `start.sh` (MacOS & Linux) and `start.ps1` (Windows) scripts are useful in o
 
 Whenever there is no image and container present the image is being **built** and **started** within a corresponding docker container. 
 
-If the container is already running, the image is going to be **rebuild** and a new container is being deployed.
+If the container is already running, the image is going to be **rebuild** and a new container is being deployed. Keep in mind, that the image does not self-update! The update can be done by removing the image on your system and re-running the start-script.
 
 In case the image is already present and the container has exited or has been removed, a new container with the existing image is being **started**.
 
