@@ -33,7 +33,7 @@ public class CheckCommandTests extends CliTestBase {
 
     @ParameterizedTest
     @EmptySource
-    @ValueSource(strings = {"  ", "\n", "\r"})
+    @ValueSource(strings = {"\r", "\n", "\r\n", "\t", "      "})
     void testFailOnNoArguments(String arg) {
         // act
         exitCode = cmd.execute("check", arg);

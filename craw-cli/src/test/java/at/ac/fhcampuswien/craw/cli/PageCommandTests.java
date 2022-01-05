@@ -40,7 +40,7 @@ public class PageCommandTests extends CliTestBase {
 
         // assert
         expectFailedExitCode();
-        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):"));
+        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):")); // Verify correct error message is printed.
         expectUsageHelpOnEndOfString(output);
     }
 
