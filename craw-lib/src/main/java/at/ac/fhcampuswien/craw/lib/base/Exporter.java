@@ -39,18 +39,18 @@ public class Exporter {
             filename += ".yml";
         }
 
-        File file = getFile(filename);
-        saveLinksAsYAML(file, links);
+        File YAML = createFileAtPath(filename);
+        writeLinksToYAML(YAML, links);
     }
 
-    private void saveLinksAsYAML(File file, List<Weblink> links) throws IOException {
-        FileWriter writer = new FileWriter(file);
+    private void writeLinksToYAML(File YAML, List<Weblink> links) throws IOException {
+        FileWriter writer = new FileWriter(YAML);
         Representer representer = new Representer();
         representer.addClassTag(Exporter.class, Tag.MAP);   //removes default tag
-        Yaml yaml = new Yaml(representer);
+        Yaml YAMLWithoutDefaultTag = new Yaml(representer);
         this.setLinks(links);
 
-        yaml.dump(this, writer);
+        YAMLWithoutDefaultTag.dump(this, writer);
     }
 
     /**
@@ -64,40 +64,40 @@ public class Exporter {
         if (!filename.endsWith(".json")) {
             filename += ".json";
         }
-        JSONArray linksAsJSON = convertLinksToJsonFormat(links);
-        saveLinksAsJSON(filename, linksAsJSON);
+        JSONArray linksAsJSON = convertLinksToJSONFormat(links);
+        writeLinksToJSON(filename, linksAsJSON);
     }
 
-    private JSONArray convertLinksToJsonFormat(List<Weblink> links) {
-        JSONArray json = new JSONArray();
+    private JSONArray convertLinksToJSONFormat(List<Weblink> links) {
+        JSONArray JSONArray = new JSONArray();
         for (Weblink link : links) {
             JSONObject linksAsJSON = new JSONObject();
             linksAsJSON.put("url", link.getUrl());
             linksAsJSON.put("name", link.getName());
-            json.add(linksAsJSON);
+            JSONArray.add(linksAsJSON);
         }
-        return json;
+        return JSONArray;
     }
 
-    private void saveLinksAsJSON(String filename, JSONArray linksAsJSON) throws IOException {
-        File file = getFile(filename);
-        FileWriter fw1 = new FileWriter(file);
-        BufferedWriter bw1 = new BufferedWriter(fw1);
-        bw1.write(linksAsJSON.toJSONString());
-        bw1.close();
+    private void writeLinksToJSON(String filename, JSONArray linksAsJSON) throws IOException {
+        File JSON = createFileAtPath(filename);
+        FileWriter fileWriter = new FileWriter(JSON);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(linksAsJSON.toJSONString());
+        bufferedWriter.close();
     }
 
-    private File getFile(String filename) throws InvalidPathException {
+    private File createFileAtPath(String filename) throws InvalidPathException {
         String defaultFolder = System.getProperty("user.home") + "/Downloads/";
-        String saveFolder = filename.substring(0, getIndex(filename));
-        filename = filename.substring(getIndex(filename));
+        String customFolder = filename.substring(0, getFilenameIndex(filename));
+        filename = filename.substring(getFilenameIndex(filename));
 
-        return saveFolder.length() <= 0
-                ? new File(defaultFolder + filename)
-                : new File(saveFolder + filename);
+        return customFolder.length() > 0
+                ? new File(customFolder + filename)
+                : new File(defaultFolder + filename);
     }
 
-    private int getIndex(String filename) {
+    private int getFilenameIndex(String filename) {
         StringBuilder sb = new StringBuilder(filename);
         sb.reverse();
         return sb.toString().contains("/")
