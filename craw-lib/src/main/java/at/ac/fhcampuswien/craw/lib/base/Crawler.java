@@ -49,15 +49,4 @@ public class Crawler {
         }
         return html;
     }
-
-    public static void main(String[] args) {
-        Crawler crawler = new Crawler();
-        System.out.println("let's go");
-        String link = new Scanner(System.in).next();
-        ArrayList<Weblink> list = new Crawler().getLinks(link);
-        for (Weblink a:
-             list) {
-            System.out.println(a.getURL() + " " + a.getName());
-        }
-    }
 }
