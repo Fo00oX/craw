@@ -4,22 +4,15 @@ import at.ac.fhcampuswien.craw.cli.commands.base.BaseLinkOutputCommand;
 import at.ac.fhcampuswien.craw.lib.base.Crawler;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
-import java.net.URL;
 import java.util.List;
 
 import static picocli.CommandLine.Command;
 
 @Command(
         name = "page",
-        description = "Fetch a list of all Links present on a Webpage"
+        description = "Fetch a list of all Links present on a Webpage."
 )
 public class PageCommand extends BaseLinkOutputCommand {
-
-    @Parameters(
-            paramLabel = "url",
-            description = "The URL to scrape all links from."
-    )
-    private URL url;
 
     @Override
     public void run() {
@@ -31,5 +24,6 @@ public class PageCommand extends BaseLinkOutputCommand {
 
         out().println(String.format("Found %d results:", result.size()));
         printWeblinks(result);
+        outputWeblinksToFilesIfRequired(result);
     }
 }

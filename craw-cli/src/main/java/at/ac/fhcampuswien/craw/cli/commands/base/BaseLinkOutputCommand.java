@@ -20,22 +20,27 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
 
     @Option(
             names = {"-j", "--json"},
+            paramLabel = "jsonFile",
             description = "Output the collected links to a specified JSON file. " +
                     "Automatically adds the .json file ending if it is not specified already. " +
-                    "Can be specified more than once. " +
-                    "WARNING! Overwrites existing file if it is specified!"
+                    "Can be specified more than once."
     )
     protected File[] jsonFiles;
 
     @Option(
             names = {"-y", "--yaml", "--yml"},
+            paramLabel = "yamlFile",
             description = "Output the collected links to a specified YAML file. " +
                     "Automatically adds the .yml file ending if it is not specified already. " +
-                    "Can be specified more than once. " +
-                    "WARNING! Overwrites existing file if it is specified!"
+                    "Can be specified more than once."
     )
     protected File[] yamlFiles;
 
+    @Parameters(
+            paramLabel = "url",
+            description = "The URL to analyze."
+    )
+    protected URL url;
 
     /**
      * Prints a List of Weblinks to the Cli
