@@ -40,10 +40,10 @@ public class Exporter {
         }
 
         File file = getFile(filename);
-        saveLinksAsYAML(links, file);
+        saveLinksAsYAML(file, links);
     }
 
-    private void saveLinksAsYAML(List<Weblink> links, File file) throws IOException {
+    private void saveLinksAsYAML(File file, List<Weblink> links) throws IOException {
         FileWriter writer = new FileWriter(file);
         Representer representer = new Representer();
         representer.addClassTag(Exporter.class, Tag.MAP);   //removes default tag
@@ -79,23 +79,29 @@ public class Exporter {
         return json;
     }
 
-    private File getFile(String filename) throws InvalidPathException {
-        if (!filename.contains("/")) {
-            String pathToDownloads = System.getProperty("user.home") + "/Downloads/";
-            return new File(pathToDownloads + filename);
-        } else {
-            // todo: get path from filename and throw error if path doesn't exist!
-            new File("../temp/").mkdirs();
-            String pathToTempFolder = "../temp/";
-            return new File(pathToTempFolder + filename);
-        }
-    }
-
     private void saveLinksAsJSON(String filename, JSONArray linksAsJSON) throws IOException {
         File file = getFile(filename);
         FileWriter fw1 = new FileWriter(file);
         BufferedWriter bw1 = new BufferedWriter(fw1);
         bw1.write(linksAsJSON.toJSONString());
         bw1.close();
+    }
+
+    private File getFile(String filename) throws InvalidPathException {
+        String defaultFolder = System.getProperty("user.home") + "/Downloads/";
+        String saveFolder = filename.substring(0, getIndex(filename));
+        filename = filename.substring(getIndex(filename));
+
+        return saveFolder.length() <= 0
+                ? new File(defaultFolder + filename)
+                : new File(saveFolder + filename);
+    }
+
+    private int getIndex(String filename) {
+        StringBuilder sb = new StringBuilder(filename);
+        sb.reverse();
+        return sb.toString().contains("/")
+                ? sb.length() - sb.indexOf("/")
+                : 0;
     }
 }

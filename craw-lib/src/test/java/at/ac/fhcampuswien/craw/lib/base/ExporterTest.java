@@ -7,11 +7,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
@@ -20,7 +22,9 @@ public class ExporterTest {
     private final Exporter exporter = new Exporter();
     private String pathToFile;
     private static List<Weblink> links;
-    private File tempDir;
+
+    @TempDir
+    File tempDir;
 
     @BeforeAll
     public static void createLinksMock() {
@@ -33,28 +37,26 @@ public class ExporterTest {
     @Test
     public void writeYAML() throws IOException {
         //arrange
-        this.pathToFile = "../temp/links.yaml";
-        tempDir = new File(pathToFile);
+        File yaml = new File(tempDir, "links.yaml");
         final String testYaml = "links:"
                 + "- {name: google, url: www.google.at}"
                 + "- {name: orf, url: www.orf.at}"
                 + "- {name: github, url: www.github.at}";
 
         //act
-        this.exporter.writeYAML(this.pathToFile, links);
+        this.exporter.writeYAML(yaml.toString(), links);
 
         //assert
-        assertTrue(tempDir.exists(), "directory exists");
-        assertTrue(tempDir.isFile(), "file lays in directory");
-        assertEquals("links.yaml", this.tempDir.getName(), "file is saved as links.yaml");
-        assertEquals(testYaml, getFileContent(pathToFile), "file content equals test content");
+        assertTrue(tempDir.isDirectory(), "Should be a directory");
+        assertTrue(yaml.exists(), "YAML should exist");
+        assertEquals("links.yaml", yaml.getName(), "YAML should be saved as links.yaml");
+        assertEquals(testYaml, getFileContent(yaml.getPath()), "YAML content should equal mocked content");
     }
 
     @Test
     public void writeJSON() throws IOException {
         //arrange
-        this.pathToFile = "../temp/links.json";
-        tempDir = new File(pathToFile);
+        File json = new File(tempDir, "links.json");
         final String testJson = "[" +
                 "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
                 "{\"name\":\"orf\"," + "\"url\":\"www.orf.at\"}," +
@@ -62,13 +64,13 @@ public class ExporterTest {
                 "]";
 
         //act
-        exporter.writeJSON(this.pathToFile, links);
+        exporter.writeJSON(json.toString(), links);
 
         //assert
-        assertTrue(tempDir.exists(), "directory exists");
-        assertTrue(tempDir.isFile(), "file lays in directory");
-        assertEquals("links.json", tempDir.getName(), "file is saved as links.json");
-        assertEquals(testJson, getFileContent(this.pathToFile), "file content equals test content");
+        assertTrue(tempDir.isDirectory(), "Should be a directory");
+        assertTrue(json.exists(), "JSON should exist");
+        assertEquals("links.json", json.getName(), "JSON should be saved as links.yaml");
+        assertEquals(testJson, getFileContent(json.getPath()), "JSON content should equal mocked content");
     }
 
     private String getFileContent(String pathToFile) throws IOException {
