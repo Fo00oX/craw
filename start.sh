@@ -14,6 +14,18 @@ function start() {
   docker start craw-cli
 }
 
+function stop(){
+  echo "Stopping craw-cli container..."
+  docker stop craw-cli
+}
+
+function cleanup(){
+  echo "Cleaning up the setup..."
+  docker stop craw-cli
+  docker rm craw-cli
+  docker rmi craw-cli
+}
+
 function rebuild () {
   echo "Removing craw-cli container..."
   docker stop craw-cli
@@ -63,6 +75,16 @@ fi
 if [ "$1" = "--start" ]
 then
   start
+fi
+
+if [ "$1" = "--stop" ]
+then
+  stop
+fi
+
+if [ "$1" = "--cleanup" ]
+then
+  cleanup
 fi
 
 if [ "$1" = "--help" ]
