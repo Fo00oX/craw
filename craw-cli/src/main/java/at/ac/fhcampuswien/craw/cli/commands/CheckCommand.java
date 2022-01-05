@@ -1,8 +1,6 @@
 package at.ac.fhcampuswien.craw.cli.commands;
 
 import at.ac.fhcampuswien.craw.cli.commands.base.BaseLinkOutputCommand;
-import at.ac.fhcampuswien.craw.lib.advanced.GoogleSearch;
-import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import java.util.List;
 
@@ -39,11 +37,5 @@ public class CheckCommand extends BaseLinkOutputCommand {
 
     @Override
     public void run() {
-        GoogleSearch search = new GoogleSearch();
-        List<Weblink> result = search.searchQuery(getQuery(), nrResults);
-
-        out().println(String.format("Found %d results:", result.size()));
-        printWeblinks(result);
-        //outputWeblinksToFilesIfRequired(result);
     }
 }
