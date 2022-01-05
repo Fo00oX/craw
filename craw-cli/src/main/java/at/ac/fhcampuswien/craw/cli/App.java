@@ -15,7 +15,7 @@ import static picocli.CommandLine.Command;
  */
 @Command(
         name = "craw",
-        description = "Craw command description",
+        description = "The craw command line app provides useful functions for crawling websites analyzing the links they contain.",
         version = {
                 "Craw version " + App.VERSION,
                 "Java version: ${java.version}",
