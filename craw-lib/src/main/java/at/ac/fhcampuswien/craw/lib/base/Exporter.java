@@ -32,7 +32,7 @@ public class Exporter {
      * Writes a list of Weblinks to a .yaml/yml file
      *
      * @param filename the path and name of the file
-     * @param links
+     * @param links    Weblinks created by Crawler
      */
     public void writeYAML(String filename, List<Weblink> links) throws IOException {
         if (!filename.endsWith(".yml") && !filename.endsWith(".yaml")) {
@@ -45,8 +45,8 @@ public class Exporter {
 
     private void saveLinksAsYAML(List<Weblink> links, File file) throws IOException {
         FileWriter writer = new FileWriter(file);
-        Representer representer = new Representer();    //removes default tag
-        representer.addClassTag(Exporter.class, Tag.MAP);
+        Representer representer = new Representer();
+        representer.addClassTag(Exporter.class, Tag.MAP);   //removes default tag
         Yaml yaml = new Yaml(representer);
         this.setLinks(links);
 
@@ -57,7 +57,7 @@ public class Exporter {
      * Writes a list of Weblinks to a .json file
      *
      * @param filename the path and name of the file
-     * @param links
+     * @param links    Weblinks created by Crawler
      */
     public void writeJSON(String filename, List<Weblink> links) throws IOException {
 
@@ -79,30 +79,23 @@ public class Exporter {
         return json;
     }
 
-    private File getFile(String filename) {
-        try {
-            if (!filename.contains("/")) {
-                String pathToDownloads = System.getProperty("user.home") + "/Downloads/";
-                return new File(pathToDownloads + filename);
-            } else {
-                new File("../temp/").mkdirs();
-                String pathToTempFolder = "../temp/";
-                return new File(pathToTempFolder + filename);
-            }
-        } catch (InvalidPathException ipe) {
-            throw ipe;
+    private File getFile(String filename) throws InvalidPathException {
+        if (!filename.contains("/")) {
+            String pathToDownloads = System.getProperty("user.home") + "/Downloads/";
+            return new File(pathToDownloads + filename);
+        } else {
+            // todo: get path from filename and throw error if path doesn't exist!
+            new File("../temp/").mkdirs();
+            String pathToTempFolder = "../temp/";
+            return new File(pathToTempFolder + filename);
         }
     }
 
     private void saveLinksAsJSON(String filename, JSONArray linksAsJSON) throws IOException {
-        try {
-            File file = getFile(filename);
-            FileWriter fw1 = new FileWriter(file);
-            BufferedWriter bw1 = new BufferedWriter(fw1);
-            bw1.write(linksAsJSON.toJSONString());
-            bw1.close();
-        } catch (IOException ioe) {
-            throw ioe;
-        }
+        File file = getFile(filename);
+        FileWriter fw1 = new FileWriter(file);
+        BufferedWriter bw1 = new BufferedWriter(fw1);
+        bw1.write(linksAsJSON.toJSONString());
+        bw1.close();
     }
 }
