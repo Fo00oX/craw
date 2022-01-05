@@ -89,12 +89,12 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
 
         if (jsonFiles.length > 0) {
             for (File f : jsonFiles) {
-                exporter.writeJSON(f.getAbsolutePath(), links);
+                exporter.writeJSON(f, links);
             }
         }
         if (yamlFiles.length > 0) {
             for (File f : yamlFiles) {
-                exporter.writeYAML(f.getAbsolutePath(), links);
+                exporter.writeYAML(f, links);
             }
         }
     }
