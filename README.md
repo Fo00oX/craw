@@ -1,7 +1,7 @@
 # Craw - Webcrawler
 
 ## Docker
-In order to enable the possibility of having the **craw-cli** application running on any system independently, it is recommended to use Docker for the deployments.
+In order to enable the possibility of having the **craw-cli** application running on any system independently, it is possible to use Docker for the deployments.
 
 ### Dockerfile
 There is a `Dockerfile` included within the root of the project folder which is required in order to build the Docker image.
