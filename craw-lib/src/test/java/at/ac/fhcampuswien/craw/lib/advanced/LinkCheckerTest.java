@@ -47,8 +47,8 @@ class LinkCheckerTest {
     void checkLinks() {
         setup();
         brokenWeblinks = linkChecker.checkLinks(weblinks);
-        assertEquals(brokenWeblinks.get(0).getURL(), brokenWeblinksResults.get(0).getURL());
-        assertEquals(brokenWeblinks.get(1).getURL(), brokenWeblinksResults.get(1).getURL());
+        assertEquals(brokenWeblinks.get(0).getUrl(), brokenWeblinksResults.get(0).getUrl());
+        assertEquals(brokenWeblinks.get(1).getUrl(), brokenWeblinksResults.get(1).getUrl());
     }
 
     @Test
