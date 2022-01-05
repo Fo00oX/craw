@@ -36,10 +36,10 @@ public class ExporterTest {
     void writeYAMLToCustomDirectory() throws IOException {
         //arrange
         File YAML = new File(tempDir, "links.yaml");
-        final String mockedYAML = "links:"
-                + "- {name: google, url: www.google.at}"
-                + "- {name: orf, url: www.orf.at}"
-                + "- {name: github, url: www.github.at}";
+        final String expectedYAML = "links:" +
+                "- name: google  url: www.google.at" +
+                "- name: orf  url: www.orf.at" +
+                "- name: github  url: www.github.at";
 
         //act
         this.exporter.writeYAML(YAML.toString(), links);
@@ -48,14 +48,14 @@ public class ExporterTest {
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(YAML.exists(), "YAML should exist");
         assertEquals("links.yaml", YAML.getName(), "YAML should be named links.yaml");
-        assertEquals(mockedYAML, getFileContent(YAML.getPath()), "YAML content should equal mocked content");
+        assertEquals(expectedYAML, getFileContent(YAML.getPath()), "YAML content should equal mocked content");
     }
 
     @Test
     void writeJSONToCustomDirectory() throws IOException {
         //arrange
         File JSON = new File(tempDir, "links.json");
-        final String mockedJSON = "[" +
+        final String expectedJSON = "[" +
                 "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
                 "{\"name\":\"orf\"," + "\"url\":\"www.orf.at\"}," +
                 "{\"name\":\"github\",\"url\":\"www.github.at\"}" +
@@ -68,7 +68,7 @@ public class ExporterTest {
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(JSON.exists(), "JSON should exist");
         assertEquals("links.json", JSON.getName(), "JSON should be named links.json");
-        assertEquals(mockedJSON, getFileContent(JSON.getPath()), "JSON content should equal mocked content");
+        assertEquals(expectedJSON, getFileContent(JSON.getPath()), "JSON content should equal mocked content");
     }
 
     private String getFileContent(String pathToFile) throws IOException {

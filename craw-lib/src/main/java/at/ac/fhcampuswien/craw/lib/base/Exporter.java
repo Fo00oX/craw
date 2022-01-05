@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
@@ -44,12 +45,16 @@ public class Exporter {
 
     private void writeLinksToYAML(File YAML, List<Weblink> links) throws IOException {
         FileWriter writer = new FileWriter(YAML);
-        Representer representer = new Representer();
-        representer.addClassTag(Exporter.class, Tag.MAP);   //removes default tag
-        Yaml YAMLWithoutDefaultTag = new Yaml(representer);
+        Yaml formattedYAML = getFormattedYAML();
         this.setLinks(links);
+        formattedYAML.dump(this, writer);
+    }
 
-        YAMLWithoutDefaultTag.dump(this, writer);
+    private Yaml getFormattedYAML() {
+        Representer representer = new Representer();
+        representer.addClassTag(Exporter.class, Tag.MAP);
+        representer.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        return new Yaml(representer);
     }
 
     /**
