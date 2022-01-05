@@ -17,8 +17,7 @@ import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 public class Exporter {
 
-    private List<Weblink> links;
-
+    private List<Weblink> links;    //field + getter and setter are needed by the snakeyaml library to generate YAMLs
 
     public void setLinks(List<Weblink> links) {
         this.links = links;
