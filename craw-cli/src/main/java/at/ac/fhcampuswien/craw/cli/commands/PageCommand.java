@@ -16,9 +16,6 @@ public class PageCommand extends BaseLinkOutputCommand {
 
     @Override
     public void run() {
-        if (!url.getProtocol().equalsIgnoreCase("http") && !url.getProtocol().equalsIgnoreCase("https"))
-            raiseError(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", url.getProtocol()));
-
         Crawler crawler = new Crawler();
         List<Weblink> result = crawler.getLinks(url.getQuery());
 

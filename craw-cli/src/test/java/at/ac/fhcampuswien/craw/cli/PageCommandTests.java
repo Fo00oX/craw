@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.craw.cli;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -45,17 +44,7 @@ public class PageCommandTests extends CliTestBase {
         expectUsageHelpOnEndOfString(output);
     }
 
-    //TODO add more invalid protocols
-    @ParameterizedTest
-    @CsvSource({"ftp,ftp://example.org"})
-    void testInvalidProtocol(String protocol, String url) {
-        // act
-        exitCode = cmd.execute("page", url);
-        String output = err.toString();
-
-        // assert
-        expectFailedExitCode();
-        assertTrue(output.startsWith(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", protocol)));
-        expectUsageHelpOnEndOfString(output);
-    }
+    // TODO add more Tests
+    // Successful scrape with links
+    // Successful scrape without links present
 }

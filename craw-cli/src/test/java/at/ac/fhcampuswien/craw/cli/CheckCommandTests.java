@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.craw.cli;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -41,6 +42,20 @@ public class CheckCommandTests extends CliTestBase {
         // assert
         expectFailedExitCode();
         assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):")); // Verify correct error message is printed.
+        expectUsageHelpOnEndOfString(output);
+    }
+
+    //TODO add more invalid protocols
+    @ParameterizedTest
+    @CsvSource({"ftp,ftp://example.org"})
+    void testInvalidProtocol(String protocol, String url) {
+        // act
+        exitCode = cmd.execute("check", url);
+        String output = err.toString();
+
+        // assert
+        expectFailedExitCode();
+        assertTrue(output.startsWith(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", protocol)));
         expectUsageHelpOnEndOfString(output);
     }
 

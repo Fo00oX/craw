@@ -42,6 +42,9 @@ public class CheckCommand extends BaseLinkOutputCommand {
 
     @Override
     public void run() {
+        if (!url.getProtocol().equalsIgnoreCase("http") && !url.getProtocol().equalsIgnoreCase("https"))
+            raiseError(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", url.getProtocol()));
+
         Crawler scraper = new Crawler();
         LinkChecker checker = new LinkChecker();
 
