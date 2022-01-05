@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.craw.lib.advanced;
 
+import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,13 +8,13 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LinkCheckerTest {
 
     private LinkChecker linkChecker;
     private List<Weblink> weblinks = new ArrayList<>();
-    private List<Weblink> brokenWeblinks = new ArrayList<>();
+    private List<BrokenLink> brokenWeblinks = new ArrayList<>();
     private List<Weblink> brokenWeblinksResults = new ArrayList<>();
     private List<Weblink> weblinksAllValid = new ArrayList<>();
     private List<Weblink> empty = new ArrayList<>();
