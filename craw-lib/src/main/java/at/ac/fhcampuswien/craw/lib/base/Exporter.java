@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -31,23 +30,20 @@ public class Exporter {
     /**
      * Writes a list of Weblinks to a .yaml/yml file
      *
-     * @param filename the path and name of the file
-     * @param links    Weblinks created by Crawler
+     * @param file  The file where the links are written
+     * @param links Weblinks created by Crawler
      */
-    public void writeYAML(String filename, List<Weblink> links) throws IOException {
-        if (!filename.endsWith(".yml") && !filename.endsWith(".yaml")) {
-            filename += ".yml";
+    public void writeYAML(File file, List<Weblink> links) throws IOException {
+        String filePath = file.toString();
+        if (!filePath.endsWith(".yml") && !filePath.endsWith(".yaml")) {
+            file = (new File(filePath + ".yml"));
         }
 
-        File YAML = createFileAtPath(filename);
-        writeLinksToYAML(YAML, links);
-    }
-
-    private void writeLinksToYAML(File YAML, List<Weblink> links) throws IOException {
-        FileWriter writer = new FileWriter(YAML);
+        FileWriter writer = new FileWriter(file);
         Yaml formattedYAML = getFormattedYAML();
-        this.setLinks(links);
+        setLinks(links);
         formattedYAML.dump(this, writer);
+
     }
 
     private Yaml getFormattedYAML() {
@@ -60,17 +56,19 @@ public class Exporter {
     /**
      * Writes a list of Weblinks to a .json file
      *
-     * @param filename the path and name of the file
-     * @param links    Weblinks created by Crawler
+     * @param file  The file where the links are written
+     * @param links Weblinks created by Crawler
      */
-    //todo change String filename to File file
-    public void writeJSON(String filename, List<Weblink> links) throws IOException {
-
-        if (!filename.endsWith(".json")) {
-            filename += ".json";
+    public void writeJSON(File file, List<Weblink> links) throws IOException {
+        String filePath = file.toString();
+        if (!filePath.endsWith(".json")) {
+            file = new File(filePath + ".json");
         }
+
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
         JSONArray linksAsJSON = convertLinksToJSONFormat(links);
-        writeLinksToJSON(filename, linksAsJSON);
+        bufferedWriter.write(linksAsJSON.toJSONString());
+        bufferedWriter.close();
     }
 
     private JSONArray convertLinksToJSONFormat(List<Weblink> links) {
@@ -82,31 +80,5 @@ public class Exporter {
             JSONArray.add(linksAsJSON);
         }
         return JSONArray;
-    }
-
-    private void writeLinksToJSON(String filename, JSONArray linksAsJSON) throws IOException {
-        File JSON = createFileAtPath(filename);
-        FileWriter fileWriter = new FileWriter(JSON);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        bufferedWriter.write(linksAsJSON.toJSONString());
-        bufferedWriter.close();
-    }
-
-    private File createFileAtPath(String filename) throws InvalidPathException {
-        String defaultFolder = System.getProperty("user.home") + "/Downloads/";
-        String customFolder = filename.substring(0, getFilenameIndex(filename));
-        filename = filename.substring(getFilenameIndex(filename));
-
-        return customFolder.length() > 0
-                ? new File(customFolder + filename)
-                : new File(defaultFolder + filename);
-    }
-
-    private int getFilenameIndex(String filename) {
-        StringBuilder sb = new StringBuilder(filename);
-        sb.reverse();
-        return sb.toString().contains("/")
-                ? sb.length() - sb.indexOf("/")
-                : 0;
     }
 }

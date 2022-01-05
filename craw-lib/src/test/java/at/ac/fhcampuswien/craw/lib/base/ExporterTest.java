@@ -42,7 +42,7 @@ public class ExporterTest {
                 "- name: github  url: www.github.at";
 
         //act
-        this.exporter.writeYAML(YAML.toString(), links);
+        this.exporter.writeYAML(YAML, links);
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
@@ -62,7 +62,7 @@ public class ExporterTest {
                 "]";
 
         //act
-        exporter.writeJSON(JSON.toString(), links);
+        exporter.writeJSON(JSON, links);
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
