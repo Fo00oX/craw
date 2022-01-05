@@ -63,6 +63,7 @@ public class Exporter {
      * @param filename the path and name of the file
      * @param links    Weblinks created by Crawler
      */
+    //todo change String filename to File file
     public void writeJSON(String filename, List<Weblink> links) throws IOException {
 
         if (!filename.endsWith(".json")) {

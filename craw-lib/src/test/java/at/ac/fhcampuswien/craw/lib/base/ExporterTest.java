@@ -33,7 +33,7 @@ public class ExporterTest {
     }
 
     @Test
-    void writeYAMLToCustomDirectory() throws IOException {
+    void writeYAMLToCustomDirectory() throws IOException {  //todo: use Exception Wrapper and add JavaDoc
         //arrange
         File YAML = new File(tempDir, "links.yaml");
         final String expectedYAML = "links:" +
@@ -52,7 +52,7 @@ public class ExporterTest {
     }
 
     @Test
-    void writeJSONToCustomDirectory() throws IOException {
+    void writeJSONToCustomDirectory() throws IOException {   //todo: use Exception Wrapper and add JavaDoc
         //arrange
         File JSON = new File(tempDir, "links.json");
         final String expectedJSON = "[" +
@@ -89,4 +89,6 @@ public class ExporterTest {
         }
         return fileContent;
     }
+
+    //todo: test exporter with empty links
 }
