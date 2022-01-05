@@ -4,19 +4,23 @@ import at.ac.fhcampuswien.craw.lib.base.Exporter;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import java.io.File;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static picocli.CommandLine.Option;
+import static picocli.CommandLine.Parameters;
 
 public abstract class BaseLinkOutputCommand extends BaseCommand {
 
     @Option(
-            names = {"--linksOnly", "-l"},
-            description = "If specified, prints only the discovered links without additional output.",
+            names = {"--overwrite", "-o"},
+            description = "By default, files are not overwritten if a specified output file already exists. By specifying this option, existing files will be overwritten if required.",
             defaultValue = "false"
     )
-    protected boolean linksOnly;
+    protected boolean overwriteFile;
 
     @Option(
             names = {"-j", "--json"},
@@ -48,12 +52,9 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
      * @param links a {@link List} of {@link Weblink}s to be printed to StdOut
      */
     protected void printWeblinks(List<Weblink> links) {
-        List<String> result = links.stream()
-                .map(x -> linksOnly ? x.getURL() : x.prettifiedString())
-                .collect(Collectors.toList());
-        for (String outStr : result) {
-            out().println(outStr);
-        }
+        links.stream()
+                .map(Weblink::prettifiedString)
+                .forEach(x -> out().println(x));
     }
 
     /**
@@ -63,6 +64,29 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
      */
     protected void outputWeblinksToFilesIfRequired(List<Weblink> links) {
         Exporter exporter = new Exporter();
+
+        // If a file is specified
+        if (!overwriteFile) {
+            List<File> conflictingFiles = Stream.concat(
+                            Arrays.stream(yamlFiles),
+                            Arrays.stream(jsonFiles)
+                    )
+                    .filter(x -> !x.exists())
+                    .collect(Collectors.toList());
+            raiseError(String.format(
+                    "%d of the files specified for output already exist. Use the --overwrite option to overwrite the following files.%s%s%s",
+                    conflictingFiles.size(),
+                    System.lineSeparator(),
+                    conflictingFiles.stream()
+                            .map(x -> String.format("%s%s",
+                                    x.getAbsolutePath(),
+                                    System.lineSeparator()
+                            ))
+                            .collect(Collectors.joining()),
+                    "No files were created or changed."
+            ));
+        }
+
         if (jsonFiles.length > 0) {
             for (File f : jsonFiles) {
                 exporter.writeJSON(f.getAbsolutePath(), links);
