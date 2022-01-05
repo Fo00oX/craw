@@ -1,6 +1,8 @@
 package at.ac.fhcampuswien.craw.cli;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,12 +32,30 @@ public class PageCommandTests extends CliTestBase {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {""})
-    void testInvalidProtocol(String url) {
+    @EmptySource
+    @ValueSource(strings = {"\r", "\n", "\r\n", "\t", "      "})
+    void testFailOnEmptyUrl(String url) {
         // act
         exitCode = cmd.execute("page", url);
-        String output = out.toString();
+        String output = err.toString();
 
         // assert
+        expectFailedExitCode();
+        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):"));
+        expectUsageHelpOnEndOfString(output);
+    }
+
+    //TODO add more invalid protocols
+    @ParameterizedTest
+    @CsvSource({"ftp,ftp://example.org"})
+    void testInvalidProtocol(String protocol, String url) {
+        // act
+        exitCode = cmd.execute("page", url);
+        String output = err.toString();
+
+        // assert
+        expectFailedExitCode();
+        assertTrue(output.startsWith(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", protocol)));
+        expectUsageHelpOnEndOfString(output);
     }
 }

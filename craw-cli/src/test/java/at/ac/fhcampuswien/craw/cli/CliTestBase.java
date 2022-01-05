@@ -53,4 +53,13 @@ public abstract class CliTestBase {
      * @param output the output that contains the Usage information.
      */
     protected abstract void expectUsageHelp(String output);
+
+    /**
+     * Verifies that the specified Output contains the Usage information as verified by {@link #expectUsageHelp(String)} at the end of the String.
+     *
+     * @param output the output containing the Usage help at the end of the string.
+     */
+    protected void expectUsageHelpOnEndOfString(String output) {
+        expectUsageHelp(output.substring(output.indexOf("Usage")));
+    }
 }
