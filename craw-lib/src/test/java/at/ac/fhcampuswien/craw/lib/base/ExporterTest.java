@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 public class ExporterTest {
@@ -77,11 +78,14 @@ public class ExporterTest {
     }
 
     /**
-     * @throws IOException thrown if file cannot be written to directory
+     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+     *                       if file content could not be read
      */
     @Test
-    void writeJSONToCustomDirectory() throws IOException {   //todo: use Exception Wrapper and add JavaDoc
+    void writeJSONToCustomDirectory() throws CrawException {
         //arrange
+        File exportedFile;
+        String fileContent;
         File JSON = new File(tempDir, "links.json");
         final String expectedJSON = "[" +
                 "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
@@ -91,33 +95,50 @@ public class ExporterTest {
 
         //act
         exporter.writeJSON(JSON, links);
-        File exportedFile = getFileFromDirectory(tempDir, "links.json");
+        try {
+            exportedFile = getFileFromDirectory(tempDir, "links.json");
+            fileContent = getFileContent(exportedFile);
+        } catch (FileNotFoundException fnfe) {
+            throw new CrawException("Exported file could not be found in directory", fnfe);
+        } catch (IOException ioe) {
+            throw new CrawException("File content could not be read", ioe);
+        }
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "JSON should exist");
         assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
-        assertEquals(expectedJSON, getFileContent(exportedFile), "Content should equal mocked content");
+        assertEquals(expectedJSON, fileContent, "Content should equal mocked content");
     }
 
     /**
-     * @throws IOException thrown if file cannot be written to directory
+     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+     *                       if file content could not be read
      */
     @Test
-    void writeEmptyJSONToCustomDirectory() throws IOException {
+    void writeEmptyJSONToCustomDirectory() throws CrawException {
         //arrange
+        File exportedFile;
+        String fileContent;
         File JSON = new File(tempDir, "links.json");
         final List<Weblink> emptyLinks = new ArrayList<>();
 
         //act
         exporter.writeJSON(JSON, emptyLinks);
-        File exportedFile = getFileFromDirectory(tempDir, "links.json");
+        try {
+            exportedFile = getFileFromDirectory(tempDir, "links.json");
+            fileContent = getFileContent(exportedFile);
+        } catch (FileNotFoundException fnfe) {
+            throw new CrawException("Exported file could not be found in directory", fnfe);
+        } catch (IOException ioe) {
+            throw new CrawException("File content could not be read", ioe);
+        }
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "JSON should exist");
         assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
-        assertEquals("[]", getFileContent(exportedFile), "Content should be empty");
+        assertEquals("[]", fileContent, "Content should be empty");
     }
 
     private File getFileFromDirectory(File directory, String filename) throws FileNotFoundException {

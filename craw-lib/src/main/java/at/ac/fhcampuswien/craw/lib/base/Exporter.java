@@ -13,6 +13,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
 
+import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 public class Exporter {
@@ -59,16 +60,21 @@ public class Exporter {
      * @param file  The file where the links are written
      * @param links Weblinks created by Crawler
      */
-    public void writeJSON(File file, List<Weblink> links) throws IOException {
+    public void writeJSON(File file, List<Weblink> links) throws CrawException {
         String filePath = file.toString();
         if (!filePath.endsWith(".json")) {
             file = new File(filePath + ".yml");
         }
 
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-        JSONArray linksAsJSON = convertLinksToJSONFormat(links);
-        bufferedWriter.write(linksAsJSON.toJSONString());
-        bufferedWriter.close();
+        BufferedWriter bufferedWriter;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(file));
+            JSONArray linksAsJSON = convertLinksToJSONFormat(links);
+            bufferedWriter.write(linksAsJSON.toJSONString());
+            bufferedWriter.close();
+        } catch (IOException ioe) {
+            throw new CrawException("File could not be exported", ioe);
+        }
     }
 
     private JSONArray convertLinksToJSONFormat(List<Weblink> links) {
