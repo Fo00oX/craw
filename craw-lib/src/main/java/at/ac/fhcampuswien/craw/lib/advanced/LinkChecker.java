@@ -38,7 +38,7 @@ public class LinkChecker {
 
         for (Weblink weblink : urls) {
             try {
-                URL url = new URL(weblink.getURL());
+                URL url = new URL(weblink.getUrl());
                 try {
                     /*
                     https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#openConnection()
@@ -48,17 +48,17 @@ public class LinkChecker {
 
                     // Currently only checking if server doesn't respond with status code 200. Implies that redirects are not supported.
                     if (responseCode != HTTP_OK) {
-                        BrokenLink brokenLink = new BrokenLink(weblink.getURL(), weblink.getName(), BrokenLink.States.NOT_OK);
+                        BrokenLink brokenLink = new BrokenLink(weblink.getUrl(), weblink.getName(), BrokenLink.States.NOT_OK);
                         brokenLinks.add(brokenLink);
                     }
                 } catch (IOException e) { // URL is well-formed but issue during connecting to host(not reachable) or writing/reading from host.
-                    BrokenLink brokenLink = new BrokenLink(weblink.getURL(), weblink.getName(), BrokenLink.States.CONNECTION_ERROR);
+                    BrokenLink brokenLink = new BrokenLink(weblink.getUrl(), weblink.getName(), BrokenLink.States.CONNECTION_ERROR);
                     brokenLinks.add(brokenLink);
 
                 }
 
             } catch (MalformedURLException e) { // Weblink could not be parsed or no legal protocol could be found
-                BrokenLink brokenLink = new BrokenLink(weblink.getURL(), weblink.getName(), BrokenLink.States.MALFORMED);
+                BrokenLink brokenLink = new BrokenLink(weblink.getUrl(), weblink.getName(), BrokenLink.States.MALFORMED);
                 brokenLinks.add(brokenLink);
             }
         }
