@@ -49,8 +49,7 @@ public class ExporterTest {
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "YAML should exist");
         assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
-        assertEquals(expectedYAML, getFileContent(exportedFile), "Content should equal " +
-                "mocked content");
+        assertEquals(expectedYAML, getFileContent(exportedFile), "Content should equal mocked content");
     }
 
     private File getFileFromDirectory(File directory, String filename) {
@@ -74,12 +73,13 @@ public class ExporterTest {
 
         //act
         exporter.writeJSON(JSON, links);
+        File exportedFile = getFileFromDirectory(tempDir, "links.json");
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
-        assertTrue(JSON.exists(), "JSON should exist");
-        assertEquals("links.json", JSON.getName(), "JSON should be named links.json");
-        assertEquals(expectedJSON, getFileContent(JSON), "JSON content should equal mocked content");
+        assertTrue(exportedFile.exists(), "JSON should exist");
+        assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
+        assertEquals(expectedJSON, getFileContent(exportedFile), "Content should equal mocked content");
     }
 
     private String getFileContent(File file) throws IOException {

@@ -62,7 +62,7 @@ public class Exporter {
     public void writeJSON(File file, List<Weblink> links) throws IOException {
         String filePath = file.toString();
         if (!filePath.endsWith(".json")) {
-            file.renameTo(new File(filePath + ".yml"));
+            file = new File(filePath + ".yml");
         }
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
