@@ -3,9 +3,6 @@
 ## Docker
 In order to enable the possibility of having the **craw-cli** application running on any system independently, it is possible to use Docker for the deployments.
 
-### Dockerfile
-There is a `Dockerfile` included within the root of the project folder which is required in order to build the Docker image.
-
 ### Start script
 The `start.sh` (MacOS & Linux) and `start.ps1` (Windows) scripts are useful in order to manage the application container.
 
