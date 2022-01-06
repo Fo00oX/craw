@@ -8,10 +8,11 @@ WORKDIR /app
 #remove existing artifacts and rebuild the project
 RUN gradle clean build
 
+RUN tar -xf craw-cli/build/distributions/craw-cli-1.0-SNAPSHOT.tar 
+
 #Build-Stage 1
 FROM openjdk:11-jre
-COPY --from=BUILD_IMAGE /app/craw-cli/build/distributions/craw-cli-1.0-SNAPSHOT.tar .
-RUN tar -xf craw-cli-1.0-SNAPSHOT.tar && rm craw-cli-1.0-SNAPSHOT.tar
+COPY --from=BUILD_IMAGE /app/craw-cli-1.0-SNAPSHOT /craw-cli-1.0-SNAPSHOT/
 
 #create user 'craw'
 RUN useradd craw --home-dir /craw-cli-1.0-SNAPSHOT/bin
