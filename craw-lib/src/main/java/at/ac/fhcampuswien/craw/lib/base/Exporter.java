@@ -34,16 +34,21 @@ public class Exporter {
      * @param file  The file where the links are written
      * @param links Weblinks created by Crawler
      */
-    public void writeYAML(File file, List<Weblink> links) throws IOException {
+    public void writeYAML(File file, List<Weblink> links) throws CrawException {
         String filePath = file.toString();
         if (!filePath.endsWith(".yml") && !filePath.endsWith(".yaml")) {
             file = new File(file.getParent(), file.getName() + ".yml");
         }
 
-        FileWriter writer = new FileWriter(file);
-        Yaml formattedYAML = getFormattedYAML();
-        setLinks(links);
-        formattedYAML.dump(this, writer);
+        FileWriter writer;
+        try {
+            writer = new FileWriter(file);
+            Yaml formattedYAML = getFormattedYAML();
+            setLinks(links);
+            formattedYAML.dump(this, writer);
+        } catch (IOException ioe) {
+            throw new CrawException("File could not be exported", ioe);
+        }
 
     }
 

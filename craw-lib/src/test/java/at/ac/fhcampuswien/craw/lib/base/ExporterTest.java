@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,8 @@ public class ExporterTest {
 
     private final Exporter exporter = new Exporter();
     private static List<Weblink> links;
+    private File exportedFile;
+    private String fileContent;
 
     @TempDir
     File tempDir;
@@ -35,10 +38,11 @@ public class ExporterTest {
     }
 
     /**
-     * @throws IOException thrown if file cannot be written to directory
+     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+     *                       if file content could not be read
      */
     @Test
-    void writeYAMLToCustomDirectory() throws IOException {  //todo: use Exception Wrapper and add JavaDoc
+    void writeYAMLToCustomDirectory() throws CrawException {
         //arrange
         File YAML = new File(tempDir, "links.yml");
         final String expectedYAML = "links:" +
@@ -48,33 +52,48 @@ public class ExporterTest {
 
         //act
         this.exporter.writeYAML(YAML, links);
-        File exportedFile = getFileFromDirectory(tempDir, "links.yml");
+        try {
+            exportedFile = getFileFromDirectory(tempDir, "links.yml");
+            fileContent = getFileContent(exportedFile);
+        } catch (FileNotFoundException fnfe) {
+            throw new CrawException("Exported YAML could not be found in directory", fnfe);
+        } catch (IOException ioe) {
+            throw new CrawException("YAML content could not be read", ioe);
+        }
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "YAML should exist");
         assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
-        assertEquals(expectedYAML, getFileContent(exportedFile), "Content should equal mocked content");
+        assertEquals(expectedYAML, fileContent, "Content should equal mocked content");
     }
 
     /**
-     * @throws IOException thrown if file cannot be written to directory
+     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+     *                       if file content could not be read
      */
     @Test
-    void writeEmptyYAMLToCustomDirectory() throws IOException {
+    void writeEmptyYAMLToCustomDirectory() throws CrawException {
         //arrange
         File YAML = new File(tempDir, "links.yml");
         final List<Weblink> emptyLinks = new ArrayList<>();
 
         //act
         exporter.writeYAML(YAML, emptyLinks);
-        File exportedFile = getFileFromDirectory(tempDir, "links.yml");
+        try {
+            exportedFile = getFileFromDirectory(tempDir, "links.yml");
+            fileContent = getFileContent(exportedFile);
+        } catch (FileNotFoundException fnfe) {
+            throw new CrawException("Exported YAML could not be found in directory", fnfe);
+        } catch (IOException ioe) {
+            throw new CrawException("YAML content could not be read", ioe);
+        }
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "YAML should exist");
         assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
-        assertEquals("links: []", getFileContent(exportedFile), "Content should be empty");
+        assertEquals("links: []", fileContent, "Content should be empty");
     }
 
     /**
@@ -84,8 +103,6 @@ public class ExporterTest {
     @Test
     void writeJSONToCustomDirectory() throws CrawException {
         //arrange
-        File exportedFile;
-        String fileContent;
         File JSON = new File(tempDir, "links.json");
         final String expectedJSON = "[" +
                 "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
@@ -99,9 +116,9 @@ public class ExporterTest {
             exportedFile = getFileFromDirectory(tempDir, "links.json");
             fileContent = getFileContent(exportedFile);
         } catch (FileNotFoundException fnfe) {
-            throw new CrawException("Exported file could not be found in directory", fnfe);
+            throw new CrawException("Exported JSON could not be found in directory", fnfe);
         } catch (IOException ioe) {
-            throw new CrawException("File content could not be read", ioe);
+            throw new CrawException("JSON content could not be read", ioe);
         }
 
         //assert
@@ -118,8 +135,6 @@ public class ExporterTest {
     @Test
     void writeEmptyJSONToCustomDirectory() throws CrawException {
         //arrange
-        File exportedFile;
-        String fileContent;
         File JSON = new File(tempDir, "links.json");
         final List<Weblink> emptyLinks = new ArrayList<>();
 
@@ -129,9 +144,9 @@ public class ExporterTest {
             exportedFile = getFileFromDirectory(tempDir, "links.json");
             fileContent = getFileContent(exportedFile);
         } catch (FileNotFoundException fnfe) {
-            throw new CrawException("Exported file could not be found in directory", fnfe);
+            throw new CrawException("Exported JSON could not be found in directory", fnfe);
         } catch (IOException ioe) {
-            throw new CrawException("File content could not be read", ioe);
+            throw new CrawException("JSON content could not be read", ioe);
         }
 
         //assert
@@ -144,7 +159,8 @@ public class ExporterTest {
     private File getFileFromDirectory(File directory, String filename) throws FileNotFoundException {
         System.out.println(directory);
 
-        for (File file : directory.listFiles()) {
+        File[] files = Objects.requireNonNull(directory.listFiles());
+        for (File file : files) {
             if (file.isFile() && file.getName().equals(filename)) {
                 return file;
             }
