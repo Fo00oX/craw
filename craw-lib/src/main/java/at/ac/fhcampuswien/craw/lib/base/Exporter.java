@@ -33,6 +33,7 @@ public class Exporter {
      *
      * @param file  The file where the links are written
      * @param links Weblinks created by Crawler
+     * @throws CrawException Is thrown when file could not be written to directory
      */
     public void writeYAML(File file, List<Weblink> links) throws CrawException {
         String filePath = file.toString();
@@ -64,6 +65,7 @@ public class Exporter {
      *
      * @param file  The file where the links are written
      * @param links Weblinks created by Crawler
+     * @throws CrawException Is thrown when file could not be written to directory
      */
     public void writeJSON(File file, List<Weblink> links) throws CrawException {
         String filePath = file.toString();
