@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +33,9 @@ public class ExporterTest {
         links.add(new Weblink("www.github.at", "github"));
     }
 
+    /**
+     * @throws IOException thrown if file cannot be written to directory
+     */
     @Test
     void writeYAMLToCustomDirectory() throws IOException {  //todo: use Exception Wrapper and add JavaDoc
         //arrange
@@ -52,15 +56,29 @@ public class ExporterTest {
         assertEquals(expectedYAML, getFileContent(exportedFile), "Content should equal mocked content");
     }
 
-    private File getFileFromDirectory(File directory, String filename) {
-        for (File file : directory.listFiles()) {
-            if (file.isFile() && file.getName().equals(filename)) {
-                return file;
-            }
-        }
-        return null;
+    /**
+     * @throws IOException thrown if file cannot be written to directory
+     */
+    @Test
+    void writeEmptyYAMLToCustomDirectory() throws IOException {
+        //arrange
+        File YAML = new File(tempDir, "links.yml");
+        final List<Weblink> emptyLinks = new ArrayList<>();
+
+        //act
+        exporter.writeYAML(YAML, emptyLinks);
+        File exportedFile = getFileFromDirectory(tempDir, "links.yml");
+
+        //assert
+        assertTrue(tempDir.isDirectory(), "Should be a directory");
+        assertTrue(exportedFile.exists(), "YAML should exist");
+        assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
+        assertEquals("links: []", getFileContent(exportedFile), "Content should be empty");
     }
 
+    /**
+     * @throws IOException thrown if file cannot be written to directory
+     */
     @Test
     void writeJSONToCustomDirectory() throws IOException {   //todo: use Exception Wrapper and add JavaDoc
         //arrange
@@ -82,6 +100,37 @@ public class ExporterTest {
         assertEquals(expectedJSON, getFileContent(exportedFile), "Content should equal mocked content");
     }
 
+    /**
+     * @throws IOException thrown if file cannot be written to directory
+     */
+    @Test
+    void writeEmptyJSONToCustomDirectory() throws IOException {
+        //arrange
+        File JSON = new File(tempDir, "links.json");
+        final List<Weblink> emptyLinks = new ArrayList<>();
+
+        //act
+        exporter.writeJSON(JSON, emptyLinks);
+        File exportedFile = getFileFromDirectory(tempDir, "links.json");
+
+        //assert
+        assertTrue(tempDir.isDirectory(), "Should be a directory");
+        assertTrue(exportedFile.exists(), "JSON should exist");
+        assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
+        assertEquals("[]", getFileContent(exportedFile), "Content should be empty");
+    }
+
+    private File getFileFromDirectory(File directory, String filename) throws FileNotFoundException {
+        System.out.println(directory);
+
+        for (File file : directory.listFiles()) {
+            if (file.isFile() && file.getName().equals(filename)) {
+                return file;
+            }
+        }
+        throw new FileNotFoundException("file " + filename + " does not exist in this directory");
+    }
+
     private String getFileContent(File file) throws IOException {
         String pathToFile = file.getPath();
         BufferedReader br = new BufferedReader(new FileReader(pathToFile));
@@ -101,6 +150,4 @@ public class ExporterTest {
         }
         return fileContent;
     }
-
-    //todo: test exporter with empty links
 }
