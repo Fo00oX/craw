@@ -10,8 +10,8 @@ public class PageCommandTests extends CliTestBase {
 
     @Override
     protected void expectUsageHelp(String output) {
-        assertTrue(output.startsWith("Usage: craw page"));
-        assertTrue(output.contains("--help"));
+        assertTrue(output.startsWith("Usage: craw page"), "usageMessage should start with 'Usage: craw page'");
+        assertTrue(output.contains("--help"), "usageMessage should contain '--help'");
     }
 
     /**
@@ -40,7 +40,7 @@ public class PageCommandTests extends CliTestBase {
 
         // assert
         expectFailedExitCode();
-        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):")); // Verify correct error message is printed.
+        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):"), "incorrect error message printed");
         expectUsageHelpOnEndOfString(output);
     }
 

@@ -15,13 +15,13 @@ public class RootCommandTests extends CliTestBase {
 
     @Override
     protected void expectUsageHelp(String output) {
-        assertTrue(output.contains("Usage: craw"));
-        assertTrue(output.contains("--version"));
-        assertTrue(output.contains("--help"));
-        assertTrue(output.contains("Commands:"));
-        assertTrue(output.contains("page"));
-        assertTrue(output.contains("check"));
-        assertTrue(output.contains("generate-completion"));
+        assertTrue(output.startsWith("Usage: craw"), "usageMessage should start with 'Usage: craw'");
+        assertTrue(output.contains("--version"), "usageMessage should contain '--version'");
+        assertTrue(output.contains("--help"), "usageMessage should contain '--help'");
+        assertTrue(output.contains("Commands:"), "usageMessage should contain 'Commands:'");
+        assertTrue(output.contains("page"), "usageMessage should contain 'page'");
+        assertTrue(output.contains("check"), "usageMessage should contain 'check'");
+        assertTrue(output.contains("generate-completion"), "usageMessage should contain 'generate-completion'");
     }
 
     @Test
@@ -32,8 +32,8 @@ public class RootCommandTests extends CliTestBase {
 
         // assert
         expectSuccessExitCode();
-        assertTrue(output.contains(App.VERSION));
-        assertTrue(output.contains("version"));
+        assertTrue(output.contains(App.VERSION), "should contain app version");
+        assertTrue(output.contains("version"), "should contain 'version'");
     }
 
     /**
@@ -62,6 +62,6 @@ public class RootCommandTests extends CliTestBase {
 
         // assert
         expectFailedExitCode();
-        assertTrue(output.contains(args)); // ensure that the error message actually contains the invalid arguments
+        assertTrue(output.contains(args), "error message should contain the invalid arguments");
     }
 }

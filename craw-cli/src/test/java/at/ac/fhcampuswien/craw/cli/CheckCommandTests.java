@@ -11,8 +11,8 @@ public class CheckCommandTests extends CliTestBase {
 
     @Override
     protected void expectUsageHelp(String output) {
-        assertTrue(output.startsWith("Usage: craw check"));
-        assertTrue(output.contains("--help"));
+        assertTrue(output.startsWith("Usage: craw check"), "usageMessage should start with 'Usage: craw check'");
+        assertTrue(output.contains("--help"), "usageMessage should contain '--help'");
     }
 
     /**
@@ -41,7 +41,7 @@ public class CheckCommandTests extends CliTestBase {
 
         // assert
         expectFailedExitCode();
-        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):")); // Verify correct error message is printed.
+        assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):"), "incorrect error message printed");
         expectUsageHelpOnEndOfString(output);
     }
 
@@ -55,7 +55,7 @@ public class CheckCommandTests extends CliTestBase {
 
         // assert
         expectFailedExitCode();
-        assertTrue(output.startsWith(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", protocol)));
+        assertTrue(output.startsWith(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", protocol)), "incorrect error message printed");
         expectUsageHelpOnEndOfString(output);
     }
 
