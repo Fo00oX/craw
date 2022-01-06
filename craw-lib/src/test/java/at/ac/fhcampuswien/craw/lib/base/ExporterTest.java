@@ -35,7 +35,7 @@ public class ExporterTest {
     @Test
     void writeYAMLToCustomDirectory() throws IOException {  //todo: use Exception Wrapper and add JavaDoc
         //arrange
-        File YAML = new File(tempDir, "links.yaml");
+        File YAML = new File(tempDir, "links.yml");
         final String expectedYAML = "links:" +
                 "- name: google  url: www.google.at" +
                 "- name: orf  url: www.orf.at" +
@@ -43,12 +43,23 @@ public class ExporterTest {
 
         //act
         this.exporter.writeYAML(YAML, links);
+        File exportedFile = getFileFromDirectory(tempDir, "links.yml");
 
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
-        assertTrue(YAML.exists(), "YAML should exist");
-        assertEquals("links.yaml", YAML.getName(), "YAML should be named links.yaml");
-        assertEquals(expectedYAML, getFileContent(YAML.getPath()), "YAML content should equal mocked content");
+        assertTrue(exportedFile.exists(), "YAML should exist");
+        assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
+        assertEquals(expectedYAML, getFileContent(exportedFile), "Content should equal " +
+                "mocked content");
+    }
+
+    private File getFileFromDirectory(File directory, String filename) {
+        for (File file : directory.listFiles()) {
+            if (file.isFile() && file.getName().equals(filename)) {
+                return file;
+            }
+        }
+        return null;
     }
 
     @Test
@@ -68,10 +79,11 @@ public class ExporterTest {
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(JSON.exists(), "JSON should exist");
         assertEquals("links.json", JSON.getName(), "JSON should be named links.json");
-        assertEquals(expectedJSON, getFileContent(JSON.getPath()), "JSON content should equal mocked content");
+        assertEquals(expectedJSON, getFileContent(JSON), "JSON content should equal mocked content");
     }
 
-    private String getFileContent(String pathToFile) throws IOException {
+    private String getFileContent(File file) throws IOException {
+        String pathToFile = file.getPath();
         BufferedReader br = new BufferedReader(new FileReader(pathToFile));
         String fileContent;
         try {

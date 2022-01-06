@@ -36,7 +36,7 @@ public class Exporter {
     public void writeYAML(File file, List<Weblink> links) throws IOException {
         String filePath = file.toString();
         if (!filePath.endsWith(".yml") && !filePath.endsWith(".yaml")) {
-            file.renameTo(new File(filePath + ".yml"));
+            file = new File(file.getParent(), file.getName() + ".yml");
         }
 
         FileWriter writer = new FileWriter(file);
