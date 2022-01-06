@@ -16,6 +16,9 @@ import org.yaml.snakeyaml.representer.Representer;
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
+/**
+ * Exports Weblinks as YAML or JSON
+ */
 public class Exporter {
 
     private List<Weblink> links;    //field + getter and setter are needed by the snakeyaml library to generate YAMLs
