@@ -4,20 +4,20 @@ public class Weblink {
     private String url;
     private String name;
 
-    public Weblink(String URL, String name) {
-        this.url = URL;
+    public Weblink(String url, String name) {
+        this.url = url;
         this.name = name;
     }
 
-    public void setURL(String URL) {
-        this.url = URL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getURL() {
+    public String getUrl() {
         return url;
     }
 
