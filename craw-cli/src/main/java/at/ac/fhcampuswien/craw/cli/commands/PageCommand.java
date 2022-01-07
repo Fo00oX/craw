@@ -22,7 +22,9 @@ public class PageCommand extends BaseLinkOutputCommand {
             List<Weblink> result = crawler.getLinks(url.getQuery());
 
             out().println(String.format("Found %d results:", result.size()));
-            printWeblinks(result);
+            result.stream()
+                    .map(Weblink::prettifiedString)
+                    .forEach(x -> out().println(x));
 
             outputWeblinksToFilesIfRequired(result);
         } catch (CrawException e) {

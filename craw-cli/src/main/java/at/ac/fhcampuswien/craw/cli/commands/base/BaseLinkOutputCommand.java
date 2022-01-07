@@ -48,17 +48,6 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
     protected URL url;
 
     /**
-     * Prints a List of Weblinks to the Cli
-     *
-     * @param links a {@link List} of {@link Weblink}s to be printed to StdOut
-     */
-    protected void printWeblinks(List<Weblink> links) {
-        links.stream()
-                .map(Weblink::prettifiedString)
-                .forEach(x -> out().println(x));
-    }
-
-    /**
      * Outputs the collected {@link Weblink}s to JSON or YML if the user requested it.
      *
      * @param links the {@link List} of {@link Weblink} containing the collected links.
