@@ -29,9 +29,9 @@ Please use GitHub issues for feedback. English is the preferred language.
 
 ## Authors
 
-Christoph Thonhauser
-Denis Radovanovic
-G. W.
-Stefan Schindler
+Christoph Thonhauser  
+Denis Radovanovic  
+G. W.  
+Stefan Schindler  
 Zsolt Zombori
 
