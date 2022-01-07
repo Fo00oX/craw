@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.craw.cli.commands;
 
 import at.ac.fhcampuswien.craw.cli.commands.base.BaseLinkOutputCommand;
 import at.ac.fhcampuswien.craw.lib.base.Crawler;
+import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import java.util.List;
@@ -16,11 +17,16 @@ public class PageCommand extends BaseLinkOutputCommand {
 
     @Override
     public void run() {
-        Crawler crawler = new Crawler();
-        List<Weblink> result = crawler.getLinks(url.getQuery());
+        try {
+            Crawler crawler = new Crawler();
+            List<Weblink> result = crawler.getLinks(url.getQuery());
 
-        out().println(String.format("Found %d results:", result.size()));
-        printWeblinks(result);
-        outputWeblinksToFilesIfRequired(result);
+            out().println(String.format("Found %d results:", result.size()));
+            printWeblinks(result);
+
+            outputWeblinksToFilesIfRequired(result);
+        } catch (CrawException e) {
+            raiseError(e.getMessage());
+        }
     }
 }

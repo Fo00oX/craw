@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.craw.cli.commands.base;
 
 import at.ac.fhcampuswien.craw.lib.base.Exporter;
+import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import java.io.File;
@@ -62,7 +63,7 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
      *
      * @param links the {@link List} of {@link Weblink} containing the collected links.
      */
-    protected void outputWeblinksToFilesIfRequired(List<Weblink> links) {
+    protected void outputWeblinksToFilesIfRequired(List<Weblink> links) throws CrawException {
         Exporter exporter = new Exporter();
 
         // If a file is specified
