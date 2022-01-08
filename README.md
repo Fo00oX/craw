@@ -2,7 +2,7 @@
 
 # Craw - Webcrawler
 
-Craw is a CLI application designed to fetch the HTML from a link, parse it and get the links found in the HTML. Craw can check if links are broken and output the result to a YAML or JSON file.
+The craw command line app provides useful functions for crawling websites analyzing the links they contain.
 
 # Getting started
 
@@ -14,12 +14,11 @@ craw -h
 craw --help
 ```
 
-The output should be the available commands and options of craw. For detailed description please scroll to the **Commands** and **Options** section.
+The output shows the available commands and options of craw. For detailed description please scroll to the **Commands** and **Options** section.
 
 ```
 craw [-hV] COMMAND
-The craw command line app provides useful functions for crawling websites
-analyzing the links they contain.
+The craw command line app provides useful functions for crawling websites analyzing the links they contain.
   -h, -?, --help   Display this help and exit
   -V, --version    Print version information and exit
 Commands:
@@ -32,12 +31,40 @@ Commands:
 
 There are two ways to run craw:
 
- - Docker
  - Gradle script
+ - Docker
+
+## Execution with Gradle
+
+You can use this command to run craw
+
+```
+./gradlew :craw-cli:run --args="commands/options/url"
+```
+
+With *--args* you can specify which command, options and url you want to pass to craw.
+
+### Usage:
+
+```
+./gradlew :craw-cli:run --args="--help"
+./gradlew :craw-cli:run --args="page --help"
+./gradlew :craw-cli:run --args="check --help"
+./gradlew :craw-cli:run --args="page https://github.com"
+./gradlew :craw-cli:run --args="page -y D:\Documents\output.yml https://github.com"
+
+```
+
+Another way to execute craw is to build the app with
+
+```
+./gradlew build
+```
+
+and then extract the **craw-cli/build/distributions/craw-cli-1.0-SNAPSHOT.zip**. This .zip contains the app and startscripts to launch it.
+
 
 ## Execution with Docker
-
-In order to enable the possibility of having the **craw-cli** application running on any system independently, it is possible to use Docker for the deployments.
 
 ### Start script
 The `start.sh` (MacOS & Linux) and `start.ps1` (Windows) scripts are useful in order to manage the application container.
@@ -103,27 +130,6 @@ In order to communicate with the dockerized application the `craw-wrapper` is re
 ```
 
 
-## Execution with Gradle
-
-You can use this command to run craw
-
-```
-./gradlew :craw-cli:run --args="commands/options/url"
-```
-
-With *--args* you can specify which command, options and url you want to pass to craw.
-
-### Usage:
-
-```
-./gradlew :craw-cli:run --args="--help"
-./gradlew :craw-cli:run --args="page --help"
-./gradlew :craw-cli:run --args="check --help"
-./gradlew :craw-cli:run --args="page https://github.com"
-./gradlew :craw-cli:run --args="page -y D:\Documents\output.yml https://github.com"
-
-```
-
 ## Commands
 
 **craw check**
@@ -166,8 +172,8 @@ Please use GitHub issues for feedback. English is the preferred language.
 
 ## Authors
 
-Christoph Thonhauser  
-Denis Radovanovic  
-G. W.  
-Stefan Schindler  
-Zsolt Zombori
+Christoph Thonhauser [chranditho]  
+Denis Radovanovic [SycSin]  
+G. W.    
+Stefan Schindler    
+Zsolt Zombori [tacsi566]
