@@ -1,5 +1,3 @@
-
-
 # Craw - Webcrawler
 
 The craw command line app provides useful functions for crawling websites analyzing the links they contain.
@@ -14,7 +12,8 @@ craw -h
 craw --help
 ```
 
-The output shows the available commands and options of craw. For detailed description please scroll to the **Commands** and **Options** section.
+The output shows the available commands and options of craw. For detailed description please scroll to the **Commands**
+and **Options** section. These options are available for every subcommand, so when you're stuck, try them!
 
 ```
 craw [-hV] COMMAND
@@ -31,12 +30,38 @@ Commands:
 
 There are two ways to run craw:
 
- - Gradle script
- - Docker
+- Gradle script
+- Docker
 
 ## Execution with Gradle
 
-You can use this command to run craw
+### Build application with gradle
+
+The craw command line application is built using the included gradle wrapper.
+
+To build the application, you can run the following command.
+
+```
+./gradlew build
+```
+
+This compiles the application into a zip-file and tarball containing both the application and launch scripts. These can
+be found in the `craw-cli/build/distributions` folder. The zip files or tarball can be copied to a target machine and
+extracted to install craw.
+
+Examples:
+
+```
+craw --help
+craw page --help
+craw check --help
+craw page https://github.com
+craw page -o --yaml D:\Documents\output.yml https://github.com
+```
+
+### Execute directly with gradle
+
+Alternatively, you can build and execute the source code directly:
 
 ```
 ./gradlew :craw-cli:run --args="commands/options/url"
@@ -44,38 +69,31 @@ You can use this command to run craw
 
 With *--args* you can specify which command, options and url you want to pass to craw.
 
-### Usage:
+Examples:
 
 ```
 ./gradlew :craw-cli:run --args="--help"
-./gradlew :craw-cli:run --args="page --help"
-./gradlew :craw-cli:run --args="check --help"
 ./gradlew :craw-cli:run --args="page https://github.com"
-./gradlew :craw-cli:run --args="page -y D:\Documents\output.yml https://github.com"
-
 ```
-
-Another way to execute craw is to build the app with
-
-```
-./gradlew build
-```
-
-and then extract the **craw-cli/build/distributions/craw-cli-1.0-SNAPSHOT.zip**. This .zip contains the app and startscripts to launch it.
-
 
 ## Execution with Docker
 
 ### Start script
-The `start.sh` (MacOS & Linux) and `start.ps1` (Windows) scripts are useful in order to manage the application container.
 
-Whenever there is no image and container present the image is being **built** and **started** within a corresponding docker container. 
+The `start.sh` (MacOS & Linux) and `start.ps1` (Windows) enable the simple management of the application container.
 
-If the container is already running, the image is going to be **rebuild** and a new container is being deployed. Keep in mind, that the image does not self-update! The update can be done by removing the image on your system and re-running the start-script.
+Whenever there is no image and container present the image is being **built** and **started** within a corresponding
+docker container.
 
-In case the image is already present and the container has exited or has been removed, a new container with the existing image is being **started**.
+If the container is already running, the image is going to be **rebuild** and a new container is being deployed. Keep in
+mind, that the image does not self-update! To rebuild the image, call the start script like
+this: ```start.sh --rebuild``` or ```start.ps1 --rebuild```.
+
+In case the image is already present and the container has exited or has been removed, a new container with the existing
+image is being **started**.
 
 #### Usage on MacOS / Linux:
+
 ```
 ./start.sh [OPTION]
 
@@ -88,6 +106,7 @@ Arguments (optional):
 ```
 
 #### Usage on Windows:
+
 ```
 .\start.ps1 [OPTION]
 
@@ -101,9 +120,11 @@ Arguments (optional):
 
 ### Craw-Wrapper
 
-In order to communicate with the dockerized application the `craw-wrapper` is required which translates all CLI arguments from the host system into the container and returns the stdout of the container.
+The `craw-wrapper` script is used to forward commands to the application container. Note, that the craw-wrapper script
+execution does not replace the ```craw``` command!
 
-#### Usage on MacOS / Linux:
+#### Examples on MacOS / Linux:
+
 ```
 ./craw-wrapper craw --help
 ./craw-wrapper craw page --help
@@ -116,7 +137,8 @@ In order to communicate with the dockerized application the `craw-wrapper` is re
 ./craw-wrapper craw page -jo home/user/Documents/output https://github.com
 ```
 
-#### Usage on Windows:
+#### Examples on Windows:
+
 ```
 ./craw-wrapper craw --help
 ./craw-wrapper craw page --help
@@ -129,10 +151,10 @@ In order to communicate with the dockerized application the `craw-wrapper` is re
 ./craw-wrapper craw page -jo D:\Documents\output https://github.com
 ```
 
-
 ## Commands
 
 **craw check**
+
 ```
 craw check [-ho] [-j=jsonFile]... [-y=yamlFile]... url
 Check a page for broken links.
@@ -140,6 +162,7 @@ url        The URL to analyze.
 ```
 
 **craw page**
+
 ```
 craw page [-ho] [-j=jsonFile]... [-y=yamlFile]... url
 Fetch a list of all links present on a webpage.
@@ -164,7 +187,6 @@ The two commands of craw support the same options. These are as follows:
                           Automatically adds the .yml file ending if it is not
                           specified already. Can be specified more than once.
 ```
-
 
 ## Peer review guidelines
 
