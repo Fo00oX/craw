@@ -1,0 +1,19 @@
+#!/bin/bash
+if ! (docker ps -f status=running | grep -q "craw-cli")
+then
+  echo "It seems there is no craw container running :("
+  echo ""
+  read -n1 -p "Do you want to start it? [y/n] " input
+  while [[ $input != 'y' && $input != 'n' ]]
+  do
+    printf "\n"
+    read -n1 -p "Do you want to start it? [y/n] " input
+  done
+  printf "\n"
+  case $input in 
+    y|Y) ./start.sh;;
+    n|N) exit 1;;
+  esac
+fi
+
+docker exec -t craw-cli craw-cli $@ 
