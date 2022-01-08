@@ -28,7 +28,7 @@ Commands:
   generate-completion  Generate bash/zsh completion script for craw.
 ```
 
-## How to run
+# How to run
 
 There are two ways to run craw:
 
@@ -104,6 +104,25 @@ In order to communicate with the dockerized application the `craw-wrapper` is re
 
 
 ## Execution with Gradle
+
+You can use this command to run craw
+
+```
+./gradlew :craw-cli:run --args="commands/options/url"
+```
+
+With *--args* you can specify which command, options and url you want to pass to craw.
+
+### Usage:
+
+```
+./gradlew :craw-cli:run --args="--help"
+./gradlew :craw-cli:run --args="page --help"
+./gradlew :craw-cli:run --args="check --help"
+./gradlew :craw-cli:run --args="page https://github.com"
+./gradlew :craw-cli:run --args="page -y D:\Documents\output.yml https://github.com"
+
+```
 
 ## Commands
 
