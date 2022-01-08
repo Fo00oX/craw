@@ -1,12 +1,12 @@
 #Build-Stage 0
-FROM gradle:7.3-jdk11 AS BUILD_IMAGE
+FROM openjdk:11 AS BUILD_IMAGE
 
 COPY . /app
 
 WORKDIR /app
 
 #remove existing artifacts and rebuild the project
-RUN gradle clean build
+RUN ./gradlew clean build
 
 RUN tar -xf craw-cli/build/distributions/craw-cli-1.0-SNAPSHOT.tar 
 
