@@ -22,6 +22,9 @@ Arguments (optional):
 --build     builds the craw-cli image
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
+--stop      stops the craw-cli container
+--clean     stops the container and removes the container
+--cleanup   stops the container, removes the container and removes the image
 --help      prints a help message
 ```
 
@@ -34,6 +37,9 @@ Arguments (optional):
 --build     builds the craw-cli image
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
+--stop      stops the craw-cli container
+--clean     stops the container and removes the container
+--cleanup   stops the container, removes the container and removes the image
 --help      prints a help message
 ````
 
