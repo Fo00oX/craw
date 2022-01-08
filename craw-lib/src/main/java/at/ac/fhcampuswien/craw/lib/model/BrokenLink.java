@@ -14,17 +14,32 @@ public class BrokenLink extends Weblink {
         /**
          * MALFORMED is when the link is not valid and could not be parsed
          **/
-        MALFORMED,
+        MALFORMED {
+            @Override
+            public String toString() {
+                return "invalid link";
+            }
+        },
 
         /**
          * CONNECTION_ERROR is when there was an error writing/reading from or connecting to the socket
          */
-        CONNECTION_ERROR,
+        CONNECTION_ERROR {
+            @Override
+            public String toString() {
+                return "unable to connect to url";
+            }
+        },
 
         /**
          * NOT_OK is when the HTTP response code != 200
          */
-        NOT_OK
+        NOT_OK {
+            @Override
+            public String toString() {
+                return "HTTP response code not 200";
+            }
+        }
     }
 
 
