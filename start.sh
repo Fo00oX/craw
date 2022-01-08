@@ -26,6 +26,12 @@ function cleanup(){
   docker rmi craw-cli
 }
 
+function clean(){
+  echo "Cleaning the setup..."
+  docker stop craw-cli
+  docker rm craw-cli
+}
+
 function rebuild () {
   echo "Removing craw-cli container..."
   docker stop craw-cli
@@ -87,6 +93,11 @@ then
   cleanup
 fi
 
+if [ "$1" = "--clean" ]
+then
+  clean
+fi
+
 if [ "$1" = "--help" ]
 then
   echo "Usage: ./start.sh [OPTION]
@@ -96,5 +107,8 @@ Arguments (optional):
 --build     builds the craw-cli image
 --run       launches a non-existent craw-cli container from a pre-built image 
 --start     starts an exited (existing) craw-cli container 
+--stop      stops the craw-cli container
+--clean     stops the container and removes the container
+--cleanup   stops the container, removes the container and removes the image
 --help      prints a help message"
 fi
