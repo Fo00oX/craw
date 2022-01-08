@@ -24,4 +24,8 @@ public class Weblink {
     public String getName() {
         return name;
     }
+
+    public String prettifiedString() {
+        return String.format("%s: %s", getName(), getUrl());
+    }
 }
