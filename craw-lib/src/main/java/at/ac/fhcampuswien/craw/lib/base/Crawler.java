@@ -9,7 +9,7 @@ import java.util.List;
  * Provides functionality to download and parse Websites
  */
 public class Crawler {
-    public List<Weblink> getLinks(String link){
+    public List<Weblink> getLinks(String link) {
         //TODO add functionality
         return new ArrayList<>();
     }
