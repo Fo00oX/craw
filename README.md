@@ -14,7 +14,7 @@ craw -h
 craw --help
 ```
 
-The output should be the available commands of craw. For detailed description please scroll to the **Commands** and **Options** section.
+The output should be the available commands and options of craw. For detailed description please scroll to the **Commands** and **Options** section.
 
 ```
 craw [-hV] COMMAND
