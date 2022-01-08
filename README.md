@@ -1,5 +1,4 @@
 # Craw - Webcrawler
-
 The craw command line app provides useful functions for crawling websites analyzing the links they contain.
 
 ## Commands
@@ -130,7 +129,6 @@ In case the image is already present and the container has exited or has been re
 image is being **started**.
 
 #### Usage on MacOS / Linux:
-
 ```
 ./start.sh [OPTION]
 
@@ -139,11 +137,13 @@ Arguments (optional):
 --build     builds the craw-cli image
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
+--stop      stops the craw-cli container
+--clean     stops the container and removes the container
+--cleanup   stops the container, removes the container and removes the image
 --help      prints a help message
 ```
 
 #### Usage on Windows:
-
 ```
 .\start.ps1 [OPTION]
 
@@ -152,8 +152,11 @@ Arguments (optional):
 --build     builds the craw-cli image
 --run       launches a non-existent craw-cli container from a pre-built image
 --start     starts an exited (existing) craw-cli container
+--stop      stops the craw-cli container
+--clean     stops the container and removes the container
+--cleanup   stops the container, removes the container and removes the image
 --help      prints a help message
-````
+```
 
 ### Craw-Wrapper
 
