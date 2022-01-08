@@ -6,6 +6,27 @@ Craw is a CLI application designed to fetch the HTML from a link, parse it and g
 
 # Getting started
 
+To get started use one of the following commands
+
+```
+craw -?
+craw -h
+craw --help
+```
+
+The output should be the available commands of craw. For detailed description please scroll to the **Commands** and **Options** section.
+
+```
+craw [-hV] COMMAND
+The craw command line app provides useful functions for crawling websites
+analyzing the links they contain.
+  -h, -?, --help   Display this help and exit
+  -V, --version    Print version information and exit
+Commands:
+  page                 Fetch a list of all Links present on a Webpage.
+  check                Check a page for broken links.
+  generate-completion  Generate bash/zsh completion script for craw.
+```
 
 ## How to run
 
@@ -86,7 +107,38 @@ In order to communicate with the dockerized application the `craw-wrapper` is re
 
 ## Commands
 
+**craw check**
+```
+craw check [-ho] [-j=jsonFile]... [-y=yamlFile]... url
+Check a page for broken links.
+url        The URL to analyze.
+```
+
+**craw page**
+```
+craw page [-ho] [-j=jsonFile]... [-y=yamlFile]... url
+Fetch a list of all links present on a webpage.
+url        The URL to analyze.
+```
+
 ## Options
+
+The two commands of craw support the same options. These are as follows:
+
+```
+  -h, -?, --help        Display this help and exit
+  -j, --json=jsonFile   Output the collected links to a specified JSON file.
+                          Automatically adds the .json file ending if it is not
+                          specified already. Can be specified more than once.
+  -o, --overwrite       By default, files are not overwritten if a specified
+                          output file already exists. By specifying this
+                          option, existing files will be overwritten if
+                          required.
+  -y, --yml, --yaml=yamlFile
+                        Output the collected links to a specified YAML file.
+                          Automatically adds the .yml file ending if it is not
+                          specified already. Can be specified more than once.
+```
 
 
 ## Peer review guidelines
@@ -100,4 +152,3 @@ Denis Radovanovic
 G. W.  
 Stefan Schindler  
 Zsolt Zombori
-
