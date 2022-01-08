@@ -158,7 +158,6 @@ Arguments (optional):
 --help      prints a help message
 ```
 
-`
 ### Craw-Wrapper
 
 The `craw-wrapper` script is used to forward commands to the application container. Note, that the craw-wrapper script
