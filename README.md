@@ -196,6 +196,6 @@ Please use GitHub issues for feedback. English is the preferred language.
 
 Christoph Thonhauser [chranditho]  
 Denis Radovanovic [SycSin]  
-G. W.    
+Gerald Wilding    
 Stefan Schindler    
 Zsolt Zombori [tacsi566]
