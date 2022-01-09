@@ -42,7 +42,6 @@ public class CrawlerTests {
         );
     }
 
-    //getLinks will always call private getHtml and handles errors
     @ParameterizedTest
     @MethodSource("input")
     void testGetLinks(String url, ArrayList<Weblink> weblinksTest, boolean expectException) {
