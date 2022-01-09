@@ -160,35 +160,34 @@ Arguments (optional):
 
 ### Craw-Wrapper
 
-The `craw-wrapper` script is used to forward commands to the application container. Note, that the craw-wrapper script
-execution does not replace the ```craw``` command!
+The `craw-wrapper` script is used to forward commands to the application container. 
 
 #### Examples on MacOS / Linux:
 
 ```
-./craw-wrapper craw --help
-./craw-wrapper craw page --help
-./craw-wrapper craw check --help
-./craw-wrapper craw page https://github.com
-./craw-wrapper craw check https://google.com
-./craw-wrapper craw page -y home/user/Documents/output.yml https://github.com
-./craw-wrapper craw check -yo home/user/Documents/output https://github.com
-./craw-wrapper craw page -j home/user/Documents/output.json https://github.com
-./craw-wrapper craw page -jo home/user/Documents/output https://github.com
+./craw-wrapper --help
+./craw-wrapper page --help
+./craw-wrapper check --help
+./craw-wrapper page https://github.com
+./craw-wrapper check https://google.com
+./craw-wrapper page -y home/user/Documents/output.yml https://github.com
+./craw-wrapper check -yo home/user/Documents/output https://github.com
+./craw-wrapper page -j home/user/Documents/output.json https://github.com
+./craw-wrapper page -jo home/user/Documents/output https://github.com
 ```
 
 #### Examples on Windows:
 
 ```
-./craw-wrapper craw --help
-./craw-wrapper craw page --help
-./craw-wrapper craw check --help
-./craw-wrapper craw page https://github.com
-./craw-wrapper craw check https://google.com
-./craw-wrapper craw page -y D:\Documents\output.yml https://github.com
-./craw-wrapper craw check -yo D:\Documents\output https://github.com
-./craw-wrapper craw page -j D:\Documents\output.json https://github.com
-./craw-wrapper craw page -jo D:\Documents\output https://github.com
+./craw-wrapper --help
+./craw-wrapper page --help
+./craw-wrapper check --help
+./craw-wrapper page https://github.com
+./craw-wrapper check https://google.com
+./craw-wrapper page -y D:\Documents\output.yml https://github.com
+./craw-wrapper check -yo D:\Documents\output https://github.com
+./craw-wrapper page -j D:\Documents\output.json https://github.com
+./craw-wrapper page -jo D:\Documents\output https://github.com
 ```
 
 ## Peer review guidelines
