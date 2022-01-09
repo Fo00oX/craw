@@ -1,23 +1,18 @@
 package at.ac.fhcampuswien.craw.lib.base;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
+import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
+import at.ac.fhcampuswien.craw.lib.model.Weblink;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
-import at.ac.fhcampuswien.craw.lib.model.Weblink;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExporterTest {
 
@@ -170,9 +165,8 @@ public class ExporterTest {
 
     private String getFileContent(File file) throws IOException {
         String pathToFile = file.getPath();
-        BufferedReader br = new BufferedReader(new FileReader(pathToFile));
         String fileContent;
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 
@@ -182,8 +176,6 @@ public class ExporterTest {
                 line = br.readLine();
             }
             fileContent = sb.toString().replace("\n", "").replace("\r", "");
-        } finally {
-            br.close();
         }
         return fileContent;
     }
