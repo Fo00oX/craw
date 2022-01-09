@@ -18,20 +18,11 @@ import java.util.regex.Pattern;
  */
 public class Crawler {
 
-    int depth;
-
-    public Crawler(int depth){
-        this.depth = depth;
-    }
-    public Crawler(){
-        this.depth = 1;
-    }
-
     /**
      * Searches a website for links
      * @param url of Website to crawl
      * @return Arraylist of Weblinks
-     * @throws CrawException Is thrown when teh URL is malformed or the website responds with an HTTP error
+     * @throws CrawException Is thrown when the URL is malformed or the website responds with an HTTP error
      */
     public ArrayList<Weblink> getLinks(String url) throws CrawException{
         ArrayList<Weblink> list = new ArrayList<>();
@@ -56,8 +47,8 @@ public class Crawler {
      * Returns HTML of a requested website
      * @param url of Website to get
      * @return html as String
-     * @throws URISyntaxException is thrown by errors in Libaries
-     * @throws IOException is thrown by errors in Libaries
+     * @throws URISyntaxException is thrown by errors in Libraries
+     * @throws IOException is thrown by errors in Libraries
      */
     private String getHtml(String url) throws URISyntaxException, IOException {
         String html;
