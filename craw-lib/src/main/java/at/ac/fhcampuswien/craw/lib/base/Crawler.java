@@ -32,9 +32,8 @@ public class Crawler {
      * @param url of Website to crawl
      * @return Arraylist of Weblinks
      * @throws CrawException Is thrown when teh URL is malformed or the website responds with an HTTP error
-     * @throws Exception Is thrown for unexpected errors
      */
-    public ArrayList<Weblink> getLinks(String url) throws CrawException, Exception {
+    public ArrayList<Weblink> getLinks(String url) throws CrawException {
         ArrayList<Weblink> list = new ArrayList<>();
         try {
             //the regex looks for the pattern <a href="x"> "y"</a>
@@ -50,12 +49,10 @@ public class Crawler {
         } catch (IOException e){
             if (e.getMessage().contains("HTTP")) {
                 throw new CrawException(e.getMessage(), e);
-            } else {
-                throw new Exception(e);
             }
         }catch(Exception e){
-
-            throw new Exception(e);
+            //unsure how we want to handle this
+            throw new CrawException("Unexpected Error occurred", e);
         }
         return list;
     }
