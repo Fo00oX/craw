@@ -1,11 +1,7 @@
 package at.ac.fhcampuswien.craw.lib.base;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-
+import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
+import at.ac.fhcampuswien.craw.lib.model.Weblink;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.DumperOptions;
@@ -13,8 +9,11 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
 
-import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
-import at.ac.fhcampuswien.craw.lib.model.Weblink;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Exports Weblinks as YAML or JSON
@@ -44,9 +43,7 @@ public class Exporter {
             file = new File(file.getParent(), file.getName() + ".yml");
         }
 
-        FileWriter writer;
-        try {
-            writer = new FileWriter(file);
+        try (FileWriter writer = new FileWriter(file)) {
             Yaml formattedYAML = getFormattedYAML();
             setLinks(links);
             formattedYAML.dump(this, writer);
@@ -76,12 +73,10 @@ public class Exporter {
             file = new File(filePath + ".yml");
         }
 
-        BufferedWriter bufferedWriter;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter(file));
+
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
             JSONArray linksAsJSON = convertLinksToJSONFormat(links);
             bufferedWriter.write(linksAsJSON.toJSONString());
-            bufferedWriter.close();
         } catch (IOException ioe) {
             throw new CrawException("File could not be exported", ioe);
         }
