@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.craw.lib.base.Crawler;
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
+import java.io.IOException;
 import java.util.List;
 
 import static picocli.CommandLine.Command;
@@ -29,6 +30,9 @@ public class PageCommand extends BaseLinkOutputCommand {
             outputWeblinksToFilesIfRequired(result);
         } catch (CrawException e) {
             raiseError(e.getMessage());
+        } catch (Exception e) {
+            //only added this, so I don't break it we discussed that you want everything not directly handled by our classes to be just Exceptions, proper handling to be discussed
+            raiseError("An Unexpected Error occurred");
         }
     }
 }
