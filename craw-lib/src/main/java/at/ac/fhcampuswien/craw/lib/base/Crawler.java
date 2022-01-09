@@ -33,7 +33,7 @@ public class Crawler {
      * @return Arraylist of Weblinks
      * @throws CrawException Is thrown when teh URL is malformed or the website responds with an HTTP error
      */
-    public ArrayList<Weblink> getLinks(String url) throws CrawException {
+    public ArrayList<Weblink> getLinks(String url) throws CrawException{
         ArrayList<Weblink> list = new ArrayList<>();
         try {
             //the regex looks for the pattern <a href="x"> "y"</a>
@@ -47,12 +47,7 @@ public class Crawler {
         } catch (MalformedURLException | URISyntaxException e) {
             throw new CrawException("Url wasn't properly formed. " + e.getMessage(), e);
         } catch (IOException e){
-            if (e.getMessage().contains("HTTP")) {
-                throw new CrawException(e.getMessage(), e);
-            }
-        }catch(Exception e){
-            //unsure how we want to handle this
-            throw new CrawException("Unexpected Error occurred", e);
+            throw new CrawException(e.getMessage(), e);
         }
         return list;
     }
@@ -61,9 +56,10 @@ public class Crawler {
      * Returns HTML of a requested website
      * @param url of Website to get
      * @return html as String
-     * @throws Exception is thrown by errors in Libaries
+     * @throws URISyntaxException is thrown by errors in Libaries
+     * @throws IOException is thrown by errors in Libaries
      */
-    private String getHtml(String url) throws Exception {
+    private String getHtml(String url) throws URISyntaxException, IOException {
         String html;
         URLConnection connection;
         URL testedUrl = new URL(url);
