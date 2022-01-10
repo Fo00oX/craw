@@ -1,4 +1,4 @@
-<img align="left" width="120" height="120" src="docs/img/craw-logo.png">
+![craw-logo](docs/img/craw-logo.png)
 
 # Craw - Webcrawler
 The craw command line app provides useful functions for crawling websites analyzing the links they contain.
