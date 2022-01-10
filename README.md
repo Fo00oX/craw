@@ -194,7 +194,7 @@ The `craw-wrapper` script is used to forward commands to the application contain
 
 ## Peer review guidelines
 
-Please use GitHub issues for feedback. English is the preferred language.
+Please use GitHub issues for feedback. English is the preferred language for Peer review feedback, as we use it for the entire project documentation.
 
 ## Authors
 
