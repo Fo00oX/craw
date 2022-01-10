@@ -55,6 +55,12 @@ public abstract class BaseLinkOutputCommand extends BaseCommand {
     protected void outputWeblinksToFilesIfRequired(List<Weblink> links) throws CrawException {
         Exporter exporter = new Exporter();
 
+        if (yamlFiles == null && jsonFiles == null) return;
+
+        // To prevent a NullPointerException
+        if (yamlFiles == null) yamlFiles = new File[]{};
+        if (jsonFiles == null) jsonFiles = new File[]{};
+
         // If a file is specified
         if (!overwriteFile) {
             List<File> conflictingFiles = Stream.concat(
