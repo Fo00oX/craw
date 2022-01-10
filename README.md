@@ -1,3 +1,5 @@
+<img align="left" width="100" height="100" src=docs/img/craw-logo.png">
+
 # Craw - Webcrawler
 The craw command line app provides useful functions for crawling websites analyzing the links they contain.
 
