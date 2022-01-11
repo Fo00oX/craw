@@ -19,7 +19,7 @@ public class PageCommand extends BaseLinkOutputCommand {
     public void run() {
         try {
             Crawler crawler = new Crawler();
-            List<Weblink> result = crawler.getLinks(url.getQuery());
+            List<Weblink> result = crawler.getLinks(url.toExternalForm());
 
             out().println(String.format("Found %d results:", result.size()));
             result.stream()

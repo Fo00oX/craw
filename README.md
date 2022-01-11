@@ -1,3 +1,5 @@
+<img align="left" width="120" height="120" src="docs/img/craw-logo.png">
+
 # Craw - Webcrawler
 The craw command line app provides useful functions for crawling websites analyzing the links they contain.
 
@@ -192,7 +194,7 @@ The `craw-wrapper` script is used to forward commands to the application contain
 
 ## Peer review guidelines
 
-Please use GitHub issues for feedback. English is the preferred language.
+Please use GitHub issues for feedback. English is the preferred language for Peer review feedback, as we use it for the entire project documentation.
 
 ## Authors
 

@@ -27,20 +27,20 @@ public class CheckCommand extends BaseLinkOutputCommand {
             LinkChecker checker = new LinkChecker();
 
             out().println(String.format("Scanning '%s' for broken links.", url));
-            List<Weblink> linksToCheck = scraper.getLinks(url.getQuery());
+            List<Weblink> linksToCheck = scraper.getLinks(url.toExternalForm());
 
             if (linksToCheck.size() == 0)
-                out().println(String.format("This page ('%s') contains no links to other pages.", url.getQuery()));
+                out().println(String.format("This page ('%s') contains no links to other pages.", url.toExternalForm()));
 
             List<BrokenLink> brokenLinks = checker.checkLinks(linksToCheck);
 
             if (brokenLinks.size() == 0)
-                out().println(String.format("All %d links on the page '%s' are valid.", linksToCheck.size(), url.getQuery()));
+                out().println(String.format("All %d links on the page '%s' are valid.", linksToCheck.size(), url.toExternalForm()));
             else {
                 out().println(String.format(
                         "Analyzed %d links on the page '%s' and found the following %d broken links: ",
                         linksToCheck.size(),
-                        url.getQuery(),
+                        url.toExternalForm(),
                         brokenLinks.size()
                 ));
                 brokenLinks.stream()
