@@ -43,8 +43,4 @@ public class PageCommandTests extends CliTestBase {
         assertTrue(output.startsWith("Invalid value for positional parameter at index 0 (url):"), "incorrect error message printed");
         expectUsageHelpOnEndOfString(output);
     }
-
-    // TODO add more Tests
-    // Successful scrape with links
-    // Successful scrape without links present
 }

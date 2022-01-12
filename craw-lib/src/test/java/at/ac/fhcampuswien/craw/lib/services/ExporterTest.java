@@ -1,7 +1,8 @@
-package at.ac.fhcampuswien.craw.lib.base;
+package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
+import at.ac.fhcampuswien.craw.lib.services.Exporter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

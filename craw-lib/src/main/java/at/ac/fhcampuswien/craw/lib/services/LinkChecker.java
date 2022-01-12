@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.craw.lib.advanced;
+package at.ac.fhcampuswien.craw.lib.services;
 
 
 import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
