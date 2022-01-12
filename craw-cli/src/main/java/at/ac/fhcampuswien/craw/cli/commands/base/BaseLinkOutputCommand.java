@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.craw.cli.commands.base;
 
-import at.ac.fhcampuswien.craw.lib.base.Exporter;
+import at.ac.fhcampuswien.craw.lib.services.Exporter;
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 

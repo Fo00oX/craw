@@ -1,17 +1,14 @@
-package at.ac.fhcampuswien.craw.lib.base;
+package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
-import org.junit.jupiter.api.Test;
+import at.ac.fhcampuswien.craw.lib.services.Crawler;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;

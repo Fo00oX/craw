@@ -1,8 +1,8 @@
 package at.ac.fhcampuswien.craw.cli.commands;
 
 import at.ac.fhcampuswien.craw.cli.commands.base.BaseLinkOutputCommand;
-import at.ac.fhcampuswien.craw.lib.advanced.LinkChecker;
-import at.ac.fhcampuswien.craw.lib.base.Crawler;
+import at.ac.fhcampuswien.craw.lib.services.LinkChecker;
+import at.ac.fhcampuswien.craw.lib.services.Crawler;
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;

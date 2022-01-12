@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.craw.lib.base;
+package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;

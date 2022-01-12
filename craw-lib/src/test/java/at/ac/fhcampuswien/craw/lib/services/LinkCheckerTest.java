@@ -1,7 +1,8 @@
-package at.ac.fhcampuswien.craw.lib.advanced;
+package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
+import at.ac.fhcampuswien.craw.lib.services.LinkChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

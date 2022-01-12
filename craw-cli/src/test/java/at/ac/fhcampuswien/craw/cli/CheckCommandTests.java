@@ -45,7 +45,6 @@ public class CheckCommandTests extends CliTestBase {
         expectUsageHelpOnEndOfString(output);
     }
 
-    //TODO add more invalid protocols
     @ParameterizedTest
     @CsvSource({"ftp,ftp://example.org"})
     void testInvalidProtocol(String protocol, String url) {
@@ -58,10 +57,4 @@ public class CheckCommandTests extends CliTestBase {
         assertTrue(output.startsWith(String.format("Unsupported protocol '%s'. Only the protocols 'http' and 'https' are supported.", protocol)), "incorrect error message printed");
         expectUsageHelpOnEndOfString(output);
     }
-
-    // TODO The following Tests are still pending (require the completion of base features and proper testdata)
-    // No links on Page
-    // All valid links on page
-    // Mixed Link success
-
 }
