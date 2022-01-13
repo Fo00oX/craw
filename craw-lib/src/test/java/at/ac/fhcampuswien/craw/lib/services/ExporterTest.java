@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +26,6 @@ public class ExporterTest {
 
     private final Exporter exporter = new Exporter();
     private static List<Weblink> links;
-    private static List<Weblink> linksWithMalformedLink;
     private File exportedFile;
     private String fileContent;
 
@@ -38,11 +38,6 @@ public class ExporterTest {
         links.add(new Weblink("www.google.at", "google"));
         links.add(new Weblink("www.orf.at", "orf"));
         links.add(new Weblink("www.github.at", "github"));
-
-        linksWithMalformedLink = new ArrayList<>();
-        linksWithMalformedLink.add(new Weblink("www.google.at", "google"));
-        linksWithMalformedLink.add(new BrokenLink("www.orf.at", "orf", NOT_OK));
-        linksWithMalformedLink.add(new Weblink("www.github.at", "github"));
     }
 
     /**
@@ -72,48 +67,6 @@ public class ExporterTest {
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "YAML should exist");
-        assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
-        assertEquals(expectedYAML, fileContent, "Content should equal mocked content");
-    }
-
-    /**
-     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
-     *                       if file content could not be read
-     */
-    @ParameterizedTest
-    @ValueSource(strings = {"MALFORMED", "NOT_OK", "CONNECTION_ERROR"})
-    void writeYAMLWithBrokenLinkToCustomDirectory(String arg) throws CrawException {
-        //arrange
-        File YAML = new File(tempDir, "links.yml");
-        for (Weblink link : linksWithMalformedLink) {
-            if (link.getClass().equals(BrokenLink.class)) {
-                switch (arg) {
-                    case "MALFORMED" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", MALFORMED));
-                    case "NOT_OK" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", NOT_OK));
-                    case "CONNECTION_ERROR" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", CONNECTION_ERROR));
-                }
-            }
-        }
-        final String expectedYAML = "links:" +
-                "- name: google  url: www.google.at" +
-                "- linkStatus: " + arg + "  name: orf  url: www.orf.at" +
-                "- name: github  url: www.github.at";
-
-        //act
-        this.exporter.writeYAML(YAML, linksWithMalformedLink);
-        try {
-            exportedFile = getFileFromDirectory(tempDir, "links.yml");
-            fileContent = getFileContent(exportedFile);
-        } catch (FileNotFoundException fnfe) {
-            throw new CrawException("Exported YAML could not be found in directory", fnfe);
-        } catch (IOException ioe) {
-            throw new CrawException("YAML content could not be read", ioe);
-        }
-
-        //assert
-        assertTrue(tempDir.isDirectory(), "Should be a directory");
-        assertTrue(exportedFile.exists(), "YAML should exist");
-        assertTrue(fileContent.contains("linkStatus"), "Should contain linkStatus");
         assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
         assertEquals(expectedYAML, fileContent, "Content should equal mocked content");
     }
@@ -182,49 +135,6 @@ public class ExporterTest {
      * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
      *                       if file content could not be read
      */
-    @ParameterizedTest
-    @ValueSource(strings = {"MALFORMED", "NOT_OK", "CONNECTION_ERROR"})
-    void writeJSONContainingBrokenLinkToCustomDirectory(String arg) throws CrawException {
-        //arrange
-        File JSON = new File(tempDir, "links.json");
-        for (Weblink link : linksWithMalformedLink) {
-            if (link.getClass().equals(BrokenLink.class)) {
-                switch (arg) {
-                    case "MALFORMED" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", MALFORMED));
-                    case "NOT_OK" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", NOT_OK));
-                    case "CONNECTION_ERROR" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", CONNECTION_ERROR));
-                }
-            }
-        }
-        final String expectedJSON = "[" +
-                "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
-                "{\"linkStatus\":\"" + arg + "\",\"name\":\"orf\",\"url\":\"www.orf.at\"}," +
-                "{\"name\":\"github\",\"url\":\"www.github.at\"}" +
-                "]";
-
-        //act
-        exporter.writeJSON(JSON, linksWithMalformedLink);
-        try {
-            exportedFile = getFileFromDirectory(tempDir, "links.json");
-            fileContent = getFileContent(exportedFile);
-        } catch (FileNotFoundException fnfe) {
-            throw new CrawException("Exported JSON could not be found in directory", fnfe);
-        } catch (IOException ioe) {
-            throw new CrawException("JSON content could not be read", ioe);
-        }
-
-        //assert
-        assertTrue(tempDir.isDirectory(), "Should be a directory");
-        assertTrue(exportedFile.exists(), "JSON should exist");
-        assertTrue(fileContent.contains("linkStatus"), "Should contain linkStatus");
-        assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
-        assertEquals(expectedJSON, fileContent, "Content should equal mocked content");
-    }
-
-    /**
-     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
-     *                       if file content could not be read
-     */
     @Test
     void writeEmptyJSONToCustomDirectory() throws CrawException {
         //arrange
@@ -247,6 +157,114 @@ public class ExporterTest {
         assertTrue(exportedFile.exists(), "JSON should exist");
         assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
         assertEquals("[]", fileContent, "Content should be empty");
+    }
+
+    @Nested
+    class ExporterWithBrokenLinksTest {
+
+        private final Exporter exporter = new Exporter();
+        private static List<Weblink> links;
+        private File exportedFile;
+        private String fileContent;
+
+        @TempDir
+        File tempDir;
+
+        @BeforeAll
+        static void createLinksMock() {
+            links = new ArrayList<>();
+            links.add(new Weblink("www.google.at", "google"));
+            links.add(new BrokenLink("www.orf.at", "orf", NOT_OK));
+            links.add(new Weblink("www.github.at", "github"));
+        }
+
+        /**
+         * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+         *                       if file content could not be read
+         */
+        @ParameterizedTest
+        @ValueSource(strings = {"MALFORMED", "NOT_OK", "CONNECTION_ERROR"})
+        void writeYAMLWithBrokenLinkToCustomDirectory(String arg) throws CrawException {
+            //arrange
+            File YAML = new File(tempDir, "links.yml");
+            setBrokenLink(arg);
+            final String expectedYAML = "links:" +
+                    "- name: google  url: www.google.at" +
+                    "- linkStatus: " + arg + "  name: orf  url: www.orf.at" +
+                    "- name: github  url: www.github.at";
+
+            //act
+            this.exporter.writeYAML(YAML, links);
+            try {
+                exportedFile = getFileFromDirectory(tempDir, "links.yml");
+                fileContent = getFileContent(exportedFile);
+            } catch (FileNotFoundException fnfe) {
+                throw new CrawException("Exported YAML could not be found in directory", fnfe);
+            } catch (IOException ioe) {
+                throw new CrawException("YAML content could not be read", ioe);
+            }
+
+            //assert
+            assertTrue(tempDir.isDirectory(), "Should be a directory");
+            assertTrue(exportedFile.exists(), "YAML should exist");
+            assertTrue(fileContent.contains("linkStatus"), "Should contain linkStatus");
+            assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
+            assertEquals(expectedYAML, fileContent, "Content should equal mocked content");
+        }
+
+        /**
+         * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+         *                       if file content could not be read
+         */
+        @ParameterizedTest
+        @ValueSource(strings = {"MALFORMED", "NOT_OK", "CONNECTION_ERROR"})
+        void writeJSONContainingBrokenLinkToCustomDirectory(String arg) throws CrawException {
+            //arrange
+            File JSON = new File(tempDir, "links.json");
+            setBrokenLink(arg);
+            final String expectedJSON = "[" +
+                    "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
+                    "{\"linkStatus\":\"" + arg + "\",\"name\":\"orf\",\"url\":\"www.orf.at\"}," +
+                    "{\"name\":\"github\",\"url\":\"www.github.at\"}" +
+                    "]";
+
+            //act
+            exporter.writeJSON(JSON, links);
+            try {
+                exportedFile = getFileFromDirectory(tempDir, "links.json");
+                fileContent = getFileContent(exportedFile);
+            } catch (FileNotFoundException fnfe) {
+                throw new CrawException("Exported JSON could not be found in directory", fnfe);
+            } catch (IOException ioe) {
+                throw new CrawException("JSON content could not be read", ioe);
+            }
+
+            //assert
+            assertTrue(tempDir.isDirectory(), "Should be a directory");
+            assertTrue(exportedFile.exists(), "JSON should exist");
+            assertTrue(fileContent.contains("linkStatus"), "Should contain linkStatus");
+            assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
+            assertEquals(expectedJSON, fileContent, "Content should equal mocked content");
+        }
+
+        private void setBrokenLink(String arg) {
+            for (Weblink link : links) {
+                if (link.getClass().equals(BrokenLink.class)) {
+                    final int index = links.indexOf(link);
+                    switch (arg) {
+                        case "MALFORMED" -> links.set(
+                                index,
+                                new BrokenLink("www.orf.at", "orf", MALFORMED));
+                        case "NOT_OK" -> links.set(
+                                index,
+                                new BrokenLink("www.orf.at", "orf", NOT_OK));
+                        case "CONNECTION_ERROR" -> links.set(
+                                index,
+                                new BrokenLink("www.orf.at", "orf", CONNECTION_ERROR));
+                    }
+                }
+            }
+        }
     }
 
     private File getFileFromDirectory(File directory, String filename) throws FileNotFoundException {
