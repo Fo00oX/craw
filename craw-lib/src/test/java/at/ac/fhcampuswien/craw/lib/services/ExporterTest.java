@@ -99,6 +99,7 @@ public class ExporterTest {
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "YAML should exist");
+        assertTrue(fileContent.contains("linkStatus"), "Should contain linkStatus");
         assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
         assertEquals(expectedYAML, fileContent, "Content should equal mocked content");
     }
@@ -191,6 +192,7 @@ public class ExporterTest {
         //assert
         assertTrue(tempDir.isDirectory(), "Should be a directory");
         assertTrue(exportedFile.exists(), "JSON should exist");
+        assertTrue(fileContent.contains("linkStatus"), "Should contain linkStatus");
         assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
         assertEquals(expectedJSON, fileContent, "Content should equal mocked content");
     }
