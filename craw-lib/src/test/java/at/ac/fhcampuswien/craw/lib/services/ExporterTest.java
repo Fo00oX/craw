@@ -168,6 +168,38 @@ public class ExporterTest {
      *                       if file content could not be read
      */
     @Test
+    void writeJSONContainingBrokenLinkToCustomDirectory() throws CrawException {
+        //arrange
+        File JSON = new File(tempDir, "links.json");
+        final String expectedJSON = "[" +
+                "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
+                "{\"linkStatus\":\"MALFORMED\",\"name\":\"orf\",\"url\":\"www.orf.at\"}," +
+                "{\"name\":\"github\",\"url\":\"www.github.at\"}" +
+                "]";
+
+        //act
+        exporter.writeJSON(JSON, linksWithMalformedLink);
+        try {
+            exportedFile = getFileFromDirectory(tempDir, "links.json");
+            fileContent = getFileContent(exportedFile);
+        } catch (FileNotFoundException fnfe) {
+            throw new CrawException("Exported JSON could not be found in directory", fnfe);
+        } catch (IOException ioe) {
+            throw new CrawException("JSON content could not be read", ioe);
+        }
+
+        //assert
+        assertTrue(tempDir.isDirectory(), "Should be a directory");
+        assertTrue(exportedFile.exists(), "JSON should exist");
+        assertEquals("links.json", exportedFile.getName(), "Should be named links.json");
+        assertEquals(expectedJSON, fileContent, "Content should equal mocked content");
+    }
+
+    /**
+     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+     *                       if file content could not be read
+     */
+    @Test
     void writeEmptyJSONToCustomDirectory() throws CrawException {
         //arrange
         File JSON = new File(tempDir, "links.json");
