@@ -1,8 +1,9 @@
 package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
+import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
-import at.ac.fhcampuswien.craw.lib.services.Exporter;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static at.ac.fhcampuswien.craw.lib.model.BrokenLink.States.MALFORMED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,6 +21,7 @@ public class ExporterTest {
 
     private final Exporter exporter = new Exporter();
     private static List<Weblink> links;
+    private static List<Weblink> linksWithMalformedLink;
     private File exportedFile;
     private String fileContent;
 
@@ -31,6 +34,11 @@ public class ExporterTest {
         links.add(new Weblink("www.google.at", "google"));
         links.add(new Weblink("www.orf.at", "orf"));
         links.add(new Weblink("www.github.at", "github"));
+
+        linksWithMalformedLink = new ArrayList<>();
+        linksWithMalformedLink.add(new Weblink("www.google.at", "google"));
+        linksWithMalformedLink.add(new BrokenLink("www.orf.at", "orf", MALFORMED));
+        linksWithMalformedLink.add(new Weblink("www.github.at", "github"));
     }
 
     /**
@@ -48,6 +56,37 @@ public class ExporterTest {
 
         //act
         this.exporter.writeYAML(YAML, links);
+        try {
+            exportedFile = getFileFromDirectory(tempDir, "links.yml");
+            fileContent = getFileContent(exportedFile);
+        } catch (FileNotFoundException fnfe) {
+            throw new CrawException("Exported YAML could not be found in directory", fnfe);
+        } catch (IOException ioe) {
+            throw new CrawException("YAML content could not be read", ioe);
+        }
+
+        //assert
+        assertTrue(tempDir.isDirectory(), "Should be a directory");
+        assertTrue(exportedFile.exists(), "YAML should exist");
+        assertEquals("links.yml", exportedFile.getName(), "Should be named links.yml");
+        assertEquals(expectedYAML, fileContent, "Content should equal mocked content");
+    }
+
+    /**
+     * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
+     *                       if file content could not be read
+     */
+    @Test
+    void writeYAMLWithBrokenLinkToCustomDirectory() throws CrawException {
+        //arrange
+        File YAML = new File(tempDir, "links.yml");
+        final String expectedYAML = "links:" +
+                "- name: google  url: www.google.at" +
+                "- linkStatus: MALFORMED  name: orf  url: www.orf.at" +
+                "- name: github  url: www.github.at";
+
+        //act
+        this.exporter.writeYAML(YAML, linksWithMalformedLink);
         try {
             exportedFile = getFileFromDirectory(tempDir, "links.yml");
             fileContent = getFileContent(exportedFile);
@@ -153,8 +192,6 @@ public class ExporterTest {
     }
 
     private File getFileFromDirectory(File directory, String filename) throws FileNotFoundException {
-        System.out.println(directory);
-
         File[] files = Objects.requireNonNull(directory.listFiles());
         for (File file : files) {
             if (file.isFile() && file.getName().equals(filename)) {

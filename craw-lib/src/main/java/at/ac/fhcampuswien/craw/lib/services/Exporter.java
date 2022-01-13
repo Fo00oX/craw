@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
+import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,6 +24,12 @@ public class Exporter {
     private List<Weblink> links;    //field + getter and setter are needed by the snakeyaml library to generate YAMLs
 
     public void setLinks(List<Weblink> links) {
+        for (Weblink link :
+                links) {
+            if (link.getClass().equals(BrokenLink.class)){
+                ((BrokenLink) link).setLinkStatus(((BrokenLink) link).getLinkStatus());
+            }
+        }
         this.links = links;
     }
 
@@ -56,6 +63,7 @@ public class Exporter {
     private Yaml getFormattedYAML() {
         Representer representer = new Representer();
         representer.addClassTag(Exporter.class, Tag.MAP);
+        representer.addClassTag(BrokenLink.class, Tag.MAP);
         representer.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         return new Yaml(representer);
     }
