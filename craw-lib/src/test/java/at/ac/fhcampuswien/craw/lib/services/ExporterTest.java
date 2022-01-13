@@ -7,13 +7,17 @@ import at.ac.fhcampuswien.craw.lib.model.Weblink;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static at.ac.fhcampuswien.craw.lib.model.BrokenLink.States.CONNECTION_ERROR;
 import static at.ac.fhcampuswien.craw.lib.model.BrokenLink.States.MALFORMED;
+import static at.ac.fhcampuswien.craw.lib.model.BrokenLink.States.NOT_OK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,7 +41,7 @@ public class ExporterTest {
 
         linksWithMalformedLink = new ArrayList<>();
         linksWithMalformedLink.add(new Weblink("www.google.at", "google"));
-        linksWithMalformedLink.add(new BrokenLink("www.orf.at", "orf", MALFORMED));
+        linksWithMalformedLink.add(new BrokenLink("www.orf.at", "orf", NOT_OK));
         linksWithMalformedLink.add(new Weblink("www.github.at", "github"));
     }
 
@@ -76,13 +80,23 @@ public class ExporterTest {
      * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
      *                       if file content could not be read
      */
-    @Test
-    void writeYAMLWithBrokenLinkToCustomDirectory() throws CrawException {
+    @ParameterizedTest
+    @ValueSource(strings = {"MALFORMED", "NOT_OK", "CONNECTION_ERROR"})
+    void writeYAMLWithBrokenLinkToCustomDirectory(String arg) throws CrawException {
         //arrange
         File YAML = new File(tempDir, "links.yml");
+        for (Weblink link : linksWithMalformedLink) {
+            if (link.getClass().equals(BrokenLink.class)) {
+                switch (arg) {
+                    case "MALFORMED" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", MALFORMED));
+                    case "NOT_OK" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", NOT_OK));
+                    case "CONNECTION_ERROR" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", CONNECTION_ERROR));
+                }
+            }
+        }
         final String expectedYAML = "links:" +
                 "- name: google  url: www.google.at" +
-                "- linkStatus: MALFORMED  name: orf  url: www.orf.at" +
+                "- linkStatus: " + arg + "  name: orf  url: www.orf.at" +
                 "- name: github  url: www.github.at";
 
         //act
@@ -168,13 +182,23 @@ public class ExporterTest {
      * @throws CrawException thrown if file could not be written to directory, exported file could not be found, or
      *                       if file content could not be read
      */
-    @Test
-    void writeJSONContainingBrokenLinkToCustomDirectory() throws CrawException {
+    @ParameterizedTest
+    @ValueSource(strings = {"MALFORMED", "NOT_OK", "CONNECTION_ERROR"})
+    void writeJSONContainingBrokenLinkToCustomDirectory(String arg) throws CrawException {
         //arrange
         File JSON = new File(tempDir, "links.json");
+        for (Weblink link : linksWithMalformedLink) {
+            if (link.getClass().equals(BrokenLink.class)) {
+                switch (arg) {
+                    case "MALFORMED" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", MALFORMED));
+                    case "NOT_OK" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", NOT_OK));
+                    case "CONNECTION_ERROR" -> linksWithMalformedLink.set(linksWithMalformedLink.indexOf(link), new BrokenLink("www.orf.at", "orf", CONNECTION_ERROR));
+                }
+            }
+        }
         final String expectedJSON = "[" +
                 "{\"name\":\"google\",\"url\":\"www.google.at\"}," +
-                "{\"linkStatus\":\"MALFORMED\",\"name\":\"orf\",\"url\":\"www.orf.at\"}," +
+                "{\"linkStatus\":\"" + arg + "\",\"name\":\"orf\",\"url\":\"www.orf.at\"}," +
                 "{\"name\":\"github\",\"url\":\"www.github.at\"}" +
                 "]";
 
