@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -163,16 +164,16 @@ public class ExporterTest {
     class ExporterWithBrokenLinksTest {
 
         private final Exporter exporter = new Exporter();
-        private static List<Weblink> links;
+        private List<Weblink> links;
         private File exportedFile;
         private String fileContent;
 
         @TempDir
         File tempDir;
 
-        @BeforeAll
-        static void createLinksMock() {
-            links = new ArrayList<>();
+        @BeforeEach
+        public void createLinksMock() {
+            this.links = new ArrayList<>();
             links.add(new Weblink("www.google.at", "google"));
             links.add(new BrokenLink("www.orf.at", "orf", NOT_OK));
             links.add(new Weblink("www.github.at", "github"));
@@ -194,7 +195,7 @@ public class ExporterTest {
                     "- name: github  url: www.github.at";
 
             //act
-            this.exporter.writeYAML(YAML, links);
+            this.exporter.writeYAML(YAML, this.links);
             try {
                 exportedFile = getFileFromDirectory(tempDir, "links.yml");
                 fileContent = getFileContent(exportedFile);
@@ -229,7 +230,7 @@ public class ExporterTest {
                     "]";
 
             //act
-            exporter.writeJSON(JSON, links);
+            exporter.writeJSON(JSON, this.links);
             try {
                 exportedFile = getFileFromDirectory(tempDir, "links.json");
                 fileContent = getFileContent(exportedFile);
