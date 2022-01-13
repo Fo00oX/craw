@@ -25,12 +25,6 @@ public class Exporter {
     private List<Weblink> links;    //field + getter and setter are needed by the snakeyaml library to generate YAMLs
 
     public void setLinks(List<Weblink> links) {
-        for (Weblink link :
-                links) {
-            if (link.getClass().equals(BrokenLink.class)) {
-                ((BrokenLink) link).setLinkStatus(((BrokenLink) link).getLinkStatus());
-            }
-        }
         this.links = links;
     }
 
