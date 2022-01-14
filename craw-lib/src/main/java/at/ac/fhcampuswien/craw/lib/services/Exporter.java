@@ -1,7 +1,9 @@
 package at.ac.fhcampuswien.craw.lib.services;
 
 import at.ac.fhcampuswien.craw.lib.exceptions.CrawException;
+import at.ac.fhcampuswien.craw.lib.model.BrokenLink;
 import at.ac.fhcampuswien.craw.lib.model.Weblink;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.DumperOptions;
@@ -56,6 +58,7 @@ public class Exporter {
     private Yaml getFormattedYAML() {
         Representer representer = new Representer();
         representer.addClassTag(Exporter.class, Tag.MAP);
+        representer.addClassTag(BrokenLink.class, Tag.MAP);
         representer.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         return new Yaml(representer);
     }
@@ -73,7 +76,6 @@ public class Exporter {
             file = new File(filePath + ".yml");
         }
 
-
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
             JSONArray linksAsJSON = convertLinksToJSONFormat(links);
             bufferedWriter.write(linksAsJSON.toJSONString());
@@ -88,8 +90,19 @@ public class Exporter {
             JSONObject linksAsJSON = new JSONObject();
             linksAsJSON.put("url", link.getUrl());
             linksAsJSON.put("name", link.getName());
+            putLinkStatus(link, linksAsJSON);
             JSONArray.add(linksAsJSON);
         }
         return JSONArray;
+    }
+
+    private void putLinkStatus(Weblink link, JSONObject linksAsJSON) {
+        if (link.getClass().equals(BrokenLink.class)) {
+            switch (((BrokenLink) link).getLinkStatus()) {
+                case MALFORMED -> linksAsJSON.put("linkStatus", "MALFORMED");
+                case NOT_OK -> linksAsJSON.put("linkStatus", "NOT_OK");
+                case CONNECTION_ERROR -> linksAsJSON.put("linkStatus", "CONNECTION_ERROR");
+            }
+        }
     }
 }

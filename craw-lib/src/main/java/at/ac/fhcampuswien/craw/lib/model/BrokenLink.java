@@ -3,7 +3,7 @@ package at.ac.fhcampuswien.craw.lib.model;
 public class BrokenLink extends Weblink {
 
 
-    private final States linkStatus;
+    private States linkStatus;
 
     /**
      * Represents the different error states of a link
@@ -50,5 +50,9 @@ public class BrokenLink extends Weblink {
 
     public States getLinkStatus() {
         return linkStatus;
+    }
+
+    public void setLinkStatus(States linkStatus) {
+        this.linkStatus = linkStatus;
     }
 }
